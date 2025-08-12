@@ -1,0 +1,38 @@
+{
+  "name": "@logoicon/react",
+  "version": "0.0.0",
+  "description": "react component of logoicon",
+  "keywords": [
+    "logo icon",
+    "logo",
+    "icon"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "dembilesmana",
+    "email": "dembilesmana@gmail.com",
+    "url": "https://dembilesmana.vercel.app"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.tsx"
+    },
+    "./*": {
+      "import": "./dist/*.tsx"
+    }
+  },
+  "scripts": {
+    "generate": "tsx ./scripts/generate.ts"
+  },
+  "dependencies": {
+    "@logoicon/logger": "*"
+  },
+  "devDependencies": {
+    "@logoicon/core": "*",
+    "@logoicon/eslintconfig": "*",
+    "@logoicon/tsconfig": "*",
+    "@logoicon/util": "*",
+    "xml-js": "^1.6.11"
+  }
+}

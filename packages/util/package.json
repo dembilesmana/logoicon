@@ -1,0 +1,10 @@
+{
+  "name": "@logoicon/util",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Utility of logoicon",
+  "license": "MIT",
+  "author": "dembilesmana",
+  "type": "module",
+  "main": "src/index.ts"
+}

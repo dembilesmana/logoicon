@@ -2,10 +2,17 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "tasks": {
+    "generate": {
+      "dependsOn": ["^generate"],
+      "outputs": [".assets/**"]
+    },
+    "@logoicon/core#generate": {
+      "outputs": [".assets/**"]
+    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**", "build/**", "dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -14,6 +21,7 @@
       "dependsOn": ["^check-types"]
     },
     "dev": {
+      "dependsOn": ["^generate"],
       "cache": false,
       "persistent": true
     }

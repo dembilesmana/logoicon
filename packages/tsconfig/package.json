@@ -1,0 +1,15 @@
+{
+  "name": "@logoicon/tsconfig",
+  "version": "0.0.0",
+  "private": true,
+  "description": "tsconfig of logoicon",
+  "license": "MIT",
+  "author": {
+    "name": "dembilesmana",
+    "email": "dembilesmana@gmail.com",
+    "url": "https://dembilesmana.vercel.app"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

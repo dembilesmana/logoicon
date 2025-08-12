@@ -1,0 +1,40 @@
+{
+  "name": "@logoicon/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "core of logoicon",
+  "keywords": [],
+  "license": "MIT",
+  "author": {
+    "name": "dembilesmana",
+    "email": "dembilesmana@gmail.com",
+    "url": "https://dembilesmana.vercel.app"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./src/index.ts"
+    },
+    "./assets": {
+      "import": "./.assets/index.ts"
+    },
+    "./metadata.json": {
+      "import": "./.assets/metadata.ts",
+      "default": "./.assets/metadata.json"
+    }
+  },
+  "scripts": {
+    "dev": "tsx watch ./src/index.ts",
+    "generate": "tsx ./scripts/generate.ts"
+  },
+  "dependencies": {
+    "@logoicon/logger": "^0.0.0",
+    "@logoicon/util": "^0.0.0"
+  },
+  "devDependencies": {
+    "@logoicon/tsconfig": "*",
+    "fast-xml-parser": "^5.2.5"
+  }
+}

@@ -1,0 +1,14 @@
+export const vercelIcon = {
+    "svg": {
+        "path": {
+            "@_d": "M577.344 0L1154.69 1000H0L577.344 0Z",
+            "@_fill": "white"
+        },
+        "@_width": "1155",
+        "@_height": "1000",
+        "@_viewBox": "0 0 1155 1000",
+        "@_fill": "none",
+        "@_xmlns": "http://www.w3.org/2000/svg"
+    }
+};
+export default vercelIcon;
