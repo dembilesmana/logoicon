@@ -27,6 +27,8 @@ out/
 build
 dist
 
+# Generate Outputs
+.assets
 
 # Debug
 npm-debug.log*
