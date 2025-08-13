@@ -19,14 +19,10 @@
     },
     "./assets": {
       "import": "./.assets/index.ts"
-    },
-    "./metadata.json": {
-      "import": "./.assets/metadata.ts",
-      "default": "./.assets/metadata.json"
     }
   },
   "scripts": {
-    "dev": "tsx watch ./src/index.ts",
+    "dev": "tsx ./src/index.ts",
     "generate": "tsx ./scripts/generate.ts"
   },
   "dependencies": {
