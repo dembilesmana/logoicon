@@ -3,10 +3,9 @@ import { XMLParser } from "fast-xml-parser";
 import { createWriteStream, mkdirSync, rmSync } from "node:fs";
 import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import { basename, dirname, extname, join } from "node:path";
-import { createIndex } from "../ast/createIndex";
-import { Metadata } from "../ast/createMetadata";
-import { createTS } from "../ast/createSVG";
-import { dir, log } from "node:console";
+import { createIndex } from "../ast/create-index";
+import { Metadata } from "../ast/create-metadata";
+import { createTS } from "../ast/create-svg";
 
 const SRCDIR = "assets";
 const OUTDIR = ".assets";
@@ -19,10 +18,6 @@ const assets = await opendir(SRCDIR, { recursive: true });
 const stream = createWriteStream(join(OUTDIR, "index.ts"));
 
 const createDirs = new Set();
-const test = new XMLParser({
-  // preserveOrder: true,
-  ignoreAttributes: false,
-});
 
 const xmlParser = new XMLParser({
   ignoreAttributes: false,
@@ -45,8 +40,6 @@ for await (const asset of assets) {
         throw new Error(error);
       },
     );
-
-    dir(test.parse(xmlData), { depth: 3 });
 
     if (!createDirs.has(outputPath)) {
       await mkdir(outputPath, { recursive: true });

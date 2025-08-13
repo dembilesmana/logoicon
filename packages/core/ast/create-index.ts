@@ -33,10 +33,8 @@ function createExportDeclaration(meta: Metadata) {
 }
 
 export async function createIndex(meta: Metadata) {
-  const a = createExportDeclaration(meta);
-
   const sourceFile = factory.createSourceFile(
-    [a],
+    [createExportDeclaration(meta)],
     factory.createToken(SyntaxKind.EndOfFileToken),
     NodeFlags.None,
   );

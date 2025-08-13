@@ -4,7 +4,7 @@ import { capitalize } from "@logoicon/util";
 import deepmerge from "deepmerge";
 import { writeFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
-import { createMetadata } from "../../ast/createMetadata";
+import { createMetadata } from "../../ast/create-metadata";
 
 type MetadataOptions = {
   write: boolean;
