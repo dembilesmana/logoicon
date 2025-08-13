@@ -25,6 +25,11 @@ export function pascalCase(text: string): string {
     .replace(/(?:^|[\s-_])(\w)/g, (_, c) => c.toUpperCase());
 }
 
+export function kebabCase(text: string): string {
+  text = normalize(text);
+  return text.replace(/\s+/g, "-");
+}
+
 // type CaseType = "pascal" | "camel" | "kebab" | "snake";
 //
 // export function convertCase(text: string, type: CaseType): string {
