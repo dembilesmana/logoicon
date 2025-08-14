@@ -1,48 +1,43 @@
-import { getData } from "@logoicon/core";
-import { logger } from "@logoicon/logger";
-import { pascalCase } from "@logoicon/util";
-import { mkdir, rm, writeFile } from "node:fs/promises";
-import { join } from "node:path";
-import { createReactComponent } from "./generate-component.ts.bak";
-import { exportFile } from "./generate-index.js";
-import { debug, log } from "node:console";
-
 import * as iconAsset from "@logoicon/core/assets";
-import { createReactComponentFxp } from "./generate-component-fxp.js";
+import { logger } from "@logoicon/logger";
+import { normalize, pascalCase } from "@logoicon/util";
+import { createWriteStream, mkdirSync, rmSync } from "node:fs";
+import { mkdir, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { createReactComponentFxp } from "../ast/create-component";
+import { createIndex } from "../ast/create-index";
 
 const assets = Object.entries(iconAsset);
 
-logger.level = "debug";
+const OUTDIR = "dist";
 
-const OUT = "dist";
+rmSync(OUTDIR, { recursive: true, force: true });
+mkdirSync(OUTDIR);
 
-await rm(OUT, { recursive: true, force: true });
+const stream = createWriteStream(join(OUTDIR, "index.ts"));
 
-// log(list);
+/**
+ * INFO: Generate components
+ */
 for (const [key, value] of assets) {
-  log(pascalCase(key));
-  const component = createReactComponentFxp(pascalCase(key), value);
-}
+  const title = normalize(key);
+  const [brand, name] = title.split(" ") as [string, string];
+  const OUTBRAND = join(OUTDIR, brand);
 
-// for (const meta of metadata) {
-//   const OUTBRAND = join(OUT, meta.brand);
-//   const svg = await getData(meta.path);
-//
-//   logger.debug(JSON.parse(svg));
-//
-//   // const { elements } = xml2js(svg);
-//
-//   // const component = createReactComponent(pascalCase(meta.title), svg);
-//
-//   // await mkdir(OUTBRAND, { recursive: true });
-//   //
-//   // await writeFile(join(OUTBRAND, meta.name + ".tsx"), component, {
-//   //   encoding: "utf-8",
-//   // });
-// }
-//
-// // const script = await exportFile(metadata);
-// //
-// // await writeFile(join(OUT, "index.tsx"), script, {
-// //   encoding: "utf-8",
-// // });
+  const path = join(OUTBRAND, name + ".tsx");
+  await mkdir(OUTBRAND, { recursive: true });
+
+  const metadata = { name, title, brand, path };
+
+  const component = createReactComponentFxp(pascalCase(key), value);
+  await writeFile(path, component, {
+    encoding: "utf-8",
+  });
+
+  /**
+   * INFO: Generate index of components
+   */
+  const script = await createIndex(metadata);
+  stream.write(script);
+}
+logger.info("Generate components", "DONE");

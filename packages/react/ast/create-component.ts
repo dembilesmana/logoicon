@@ -1,5 +1,4 @@
 import { camelCase } from "@logoicon/util";
-import { log } from "node:console";
 import {
   ArrowFunction,
   createPrinter,
@@ -14,8 +13,8 @@ import {
 } from "typescript";
 
 /**
- *  * Convert FXP attributes (@_foo) ke object { foo: value }
- *   */
+ * INFO: Convert FXP attributes (@_foo) ke object { foo: value }
+ */
 function getFxpAttributes(node: any) {
   const attrs: Record<string, string> = {};
   for (const [key, value] of Object.entries(node)) {
@@ -177,6 +176,5 @@ export function createReactComponentFxp(name: string, fxpRoot: any) {
   const printer = createPrinter({ newLine: NewLineKind.LineFeed });
   const script = printer.printFile(sourceFile);
 
-  log(script);
   return script;
 }

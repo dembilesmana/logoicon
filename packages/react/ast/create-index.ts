@@ -1,4 +1,3 @@
-import type { IconMeta, metadata } from "@logoicon/core/meta";
 import { pascalCase } from "@logoicon/util";
 import { join } from "node:path";
 import {
@@ -9,7 +8,14 @@ import {
   SyntaxKind,
 } from "typescript";
 
-function recursive(meta: IconMeta) {
+export type Metadata = {
+  name: string;
+  title: string;
+  brand: string;
+  path: string;
+};
+
+function createExportDeclaration(meta: Metadata) {
   const exports = factory.createExportDeclaration(
     undefined,
     false,
@@ -26,13 +32,9 @@ function recursive(meta: IconMeta) {
   return exports;
 }
 
-export async function exportFile(some: typeof metadata) {
-  const a = some.map((v) => {
-    return recursive(v);
-  });
-
+export async function createIndex(meta: Metadata) {
   const sourceFile = factory.createSourceFile(
-    a,
+    [createExportDeclaration(meta)],
     factory.createToken(SyntaxKind.EndOfFileToken),
     NodeFlags.None,
   );
