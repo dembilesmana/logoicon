@@ -3,6 +3,5 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-  "include": ["scripts"],
   "exclude": ["node_modules", "dist"]
 }
