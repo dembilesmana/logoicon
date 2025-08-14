@@ -1,10 +1,11 @@
+import type { Metadata } from "../ast/create-index";
+
 import { logger } from "@logoicon/logger";
 import { XMLParser } from "fast-xml-parser";
 import { createWriteStream, mkdirSync, rmSync } from "node:fs";
 import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import { basename, dirname, extname, join } from "node:path";
 import { createIndex } from "../ast/create-index";
-import { Metadata } from "../ast/create-metadata";
 import { createTS } from "../ast/create-svg";
 
 const SRCDIR = "assets";
