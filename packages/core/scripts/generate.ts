@@ -47,7 +47,8 @@ for await (const asset of assets) {
       createDirs.add(outputPath);
     }
 
-    const parsed = xmlParser.parse(xmlData);
+    let parsed = xmlParser.parse(xmlData);
+    delete parsed["?xml"];
 
     /**
      * INFO: create SVG in json
