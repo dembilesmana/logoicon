@@ -16,7 +16,7 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.tsx"
+      "import": "./dist/index.ts"
     },
     "./*": {
       "import": "./dist/*.tsx"
@@ -32,7 +32,6 @@
     "@logoicon/core": "*",
     "@logoicon/eslintconfig": "*",
     "@logoicon/tsconfig": "*",
-    "@logoicon/util": "*",
-    "xml-js": "^1.6.11"
+    "@logoicon/util": "*"
   }
 }
