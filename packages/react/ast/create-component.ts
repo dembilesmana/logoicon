@@ -8,43 +8,51 @@ import {
   JsxElement,
   NewLineKind,
   NodeFlags,
+  ObjectLiteralExpression,
   Statement,
   SyntaxKind,
 } from "typescript";
+import { ElementNode } from "../scripts/converter";
+import { logger } from "@logoicon/logger";
 
-/**
- * INFO: Convert FXP attributes (@_foo) ke object { foo: value }
- */
-function getFxpAttributes(node: any) {
-  const attrs: Record<string, string> = {};
-  for (const [key, value] of Object.entries(node)) {
-    if (key.startsWith("@_")) {
-      attrs[key.slice(2)] = String(value);
+function createObjectVariant(element: ElementNode) {
+  if (element.type !== "Class") {
+    for (const child of element.children ?? []) {
+      return createObjectVariant(child);
     }
   }
-  return attrs;
+
+  return factory.createObjectLiteralExpression(
+    Object.entries(element).map(([i, a]) =>
+      factory.createPropertyAssignment(
+        factory.createStringLiteral(i),
+        factory.createObjectLiteralExpression(
+          Object.entries(a.).map(([k, v]) =>
+            factory.createPropertyAssignment(
+              factory.createIdentifier(camelCase(k)),
+              factory.createStringLiteral(v),
+            ),
+          ),
+          true,
+        ),
+      ),
+    ),
+    true,
+  );
 }
 
-function getFxpChildren(node: any) {
-  const children: Array<{ name: string; node: any }> = [];
-  for (const [key, value] of Object.entries(node)) {
-    if (!key.startsWith("@_")) {
-      if (Array.isArray(value)) {
-        value.forEach((v) => children.push({ name: key, node: v }));
-      } else {
-        children.push({ name: key, node: value });
-      }
-    }
-  }
-  return children;
-}
-
-function createJsxAttributesFxp(node: any): JsxAttributes {
-  const attrs = getFxpAttributes(node);
+// -------------------------------------------
+// Buat JSX Attributes dari attributes AST
+// -------------------------------------------
+function createJsxAttributes(
+  attributes: Record<string, string> = {},
+): JsxAttributes {
   return factory.createJsxAttributes(
-    Object.entries(attrs).map(([key, value]) => {
+    Object.entries(attributes).map(([key, value]) => {
       return factory.createJsxAttribute(
-        factory.createIdentifier(camelCase(key)),
+        factory.createIdentifier(
+          camelCase(key !== "class" ? key : "className"),
+        ),
         key === "style"
           ? factory.createJsxExpression(
               undefined,
@@ -53,10 +61,13 @@ function createJsxAttributesFxp(node: any): JsxAttributes {
                   .split(";")
                   .filter(Boolean)
                   .map((rule) => {
-                    const [k, v] = rule.split(":").map((s) => s.trim());
+                    const [k, v] = rule.split(":").map((s) => s.trim()) as [
+                      string,
+                      string,
+                    ];
                     return factory.createPropertyAssignment(
-                      factory.createIdentifier(k),
-                      factory.createStringLiteral(v || ""),
+                      factory.createIdentifier(camelCase(k)),
+                      factory.createStringLiteral(v),
                     );
                   }),
               ),
@@ -67,15 +78,24 @@ function createJsxAttributesFxp(node: any): JsxAttributes {
   );
 }
 
-function createJsxChildFxp(name: string, node: any): JsxChild {
-  const attributes = createJsxAttributesFxp(node);
-  const children = getFxpChildren(node).map(({ name, node }) =>
-    createJsxChildFxp(name, node),
+// -------------------------------------------
+// Buat JSX Child dari ElementNode
+// -------------------------------------------
+function createJsxChild(node: ElementNode): JsxChild {
+  logger.debug("Creating JSX Child for node:", node);
+
+  if (node.type === "Text") {
+    return factory.createJsxText(node.value ?? "");
+  }
+
+  const attributes = createJsxAttributes(node.attributes);
+  const children = (node.children?.filter((v) => v.name !== "defs") ?? []).map(
+    createJsxChild,
   );
 
   if (children.length === 0) {
     return factory.createJsxSelfClosingElement(
-      factory.createIdentifier(name),
+      factory.createIdentifier(node.name ?? "Unknown"),
       undefined,
       attributes,
     );
@@ -83,7 +103,7 @@ function createJsxChildFxp(name: string, node: any): JsxChild {
 
   return factory.createJsxElement(
     factory.createJsxOpeningElement(
-      factory.createIdentifier(name),
+      factory.createIdentifier(node.name ?? "Unknown"),
       undefined,
       factory.createJsxAttributes([
         factory.createJsxSpreadAttribute(factory.createIdentifier("props")),
@@ -91,15 +111,24 @@ function createJsxChildFxp(name: string, node: any): JsxChild {
       ]),
     ),
     children,
-    factory.createJsxClosingElement(factory.createIdentifier(name)),
+    factory.createJsxClosingElement(
+      factory.createIdentifier(node.name ?? "Unknown"),
+    ),
   );
 }
 
-function createJsxFxp(rootObj: any) {
-  const [rootName, rootNode] = Object.entries(rootObj)[0];
-  return createJsxChildFxp(rootName, rootNode) as JsxElement;
+// -------------------------------------------
+// Buat JSX dari root AST
+// -------------------------------------------
+function createJsx(root: ElementNode): JsxElement {
+  logger.debug("Creating JSX for root:", root);
+
+  return createJsxChild(root) as JsxElement;
 }
 
+// -------------------------------------------
+// Arrow function React component
+// -------------------------------------------
 function createArrowFunction(...statement: Statement[]): ArrowFunction {
   const propsParam = factory.createParameterDeclaration(
     undefined,
@@ -125,7 +154,11 @@ function createArrowFunction(...statement: Statement[]): ArrowFunction {
   );
 }
 
-export function createReactComponentFxp(name: string, fxpRoot: any) {
+// -------------------------------------------
+// Generate React Component dari AST
+// -------------------------------------------
+export function createReactComponent(name: string, root: ElementNode) {
+  logger.debug("Generating React component:", name);
   const importTypeReact = factory.createImportDeclaration(
     undefined,
     factory.createImportClause(
@@ -142,6 +175,24 @@ export function createReactComponentFxp(name: string, fxpRoot: any) {
     factory.createStringLiteral("react"),
   );
 
+  logger.info(root.children);
+
+  const variantsDecl = factory.createVariableStatement(
+    // [factory.createModifier(SyntaxKind.const)],
+    undefined,
+    factory.createVariableDeclarationList(
+      [
+        factory.createVariableDeclaration(
+          factory.createIdentifier("variants"),
+          undefined,
+          undefined,
+          createObjectVariant(root),
+        ),
+      ],
+      NodeFlags.Const,
+    ),
+  );
+
   const exportNamed = factory.createVariableStatement(
     [factory.createModifier(SyntaxKind.ExportKeyword)],
     factory.createVariableDeclarationList(
@@ -151,8 +202,9 @@ export function createReactComponentFxp(name: string, fxpRoot: any) {
           undefined,
           undefined,
           createArrowFunction(
+            variantsDecl,
             factory.createReturnStatement(
-              factory.createParenthesizedExpression(createJsxFxp(fxpRoot)),
+              factory.createParenthesizedExpression(createJsx(root)),
             ),
           ),
         ),
