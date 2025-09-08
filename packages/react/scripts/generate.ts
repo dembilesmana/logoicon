@@ -4,10 +4,13 @@ import { normalize, pascalCase } from "@logoicon/util";
 import { createWriteStream, mkdirSync, rmSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { createReactComponentFxp } from "../ast/create-component";
+import { createReactComponent } from "../ast/create-component";
 import { createIndex } from "../ast/create-index";
+import { converter } from "./converter";
 
-const assets = Object.entries(iconAsset);
+let assets = Object.entries(iconAsset);
+
+// logger.level = "debug";
 
 const OUTDIR = "dist";
 
@@ -19,6 +22,8 @@ const stream = createWriteStream(join(OUTDIR, "index.ts"));
 /**
  * INFO: Generate components
  */
+assets = assets.filter((v) => v[0].includes("gitlab"));
+
 for (const [key, value] of assets) {
   const title = normalize(key);
   const [brand, name] = title.split(" ") as [string, string];
@@ -29,7 +34,9 @@ for (const [key, value] of assets) {
 
   const metadata = { name, title, brand, path };
 
-  const component = createReactComponentFxp(pascalCase(key), value);
+  const convertion = converter(value);
+  logger.debug(convertion);
+  const component = createReactComponent(pascalCase(key), convertion);
   await writeFile(path, component, {
     encoding: "utf-8",
   });
@@ -40,4 +47,5 @@ for (const [key, value] of assets) {
   const script = await createIndex(metadata);
   stream.write(script);
 }
+
 logger.info("Generate components", "DONE");
