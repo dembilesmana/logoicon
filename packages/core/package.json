@@ -22,8 +22,8 @@
     }
   },
   "scripts": {
-    "dev": "tsx ./src/index.ts",
-    "generate": "tsx ./scripts/generate.ts"
+    "dev": "tsx watch ./src/index.ts",
+    "generate": "tsx watch ./scripts/generate.ts"
   },
   "dependencies": {
     "@logoicon/logger": "^0.0.0",

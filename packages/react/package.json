@@ -23,7 +23,7 @@
     }
   },
   "scripts": {
-    "generate": "tsx ./scripts/generate.ts"
+    "generate": "tsx watch ./scripts/generate.ts"
   },
   "dependencies": {
     "@logoicon/logger": "*"
