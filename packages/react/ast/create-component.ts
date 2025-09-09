@@ -1,3 +1,4 @@
+import { logger } from "@logoicon/logger";
 import { camelCase } from "@logoicon/util";
 import {
   ArrowFunction,
@@ -8,37 +9,65 @@ import {
   JsxElement,
   NewLineKind,
   NodeFlags,
-  ObjectLiteralExpression,
   Statement,
   SyntaxKind,
 } from "typescript";
 import { ElementNode } from "../scripts/converter";
-import { logger } from "@logoicon/logger";
 
 function createObjectVariant(element: ElementNode) {
-  if (element.type !== "Class") {
-    for (const child of element.children ?? []) {
-      return createObjectVariant(child);
-    }
-  }
-
   return factory.createObjectLiteralExpression(
-    Object.entries(element).map(([i, a]) =>
+    element.children!.map(({ name, attributes }) =>
       factory.createPropertyAssignment(
-        factory.createStringLiteral(i),
+        factory.createStringLiteral(name ?? "default"),
         factory.createObjectLiteralExpression(
-          Object.entries(a.).map(([k, v]) =>
+          Object.entries(attributes!).map(([key, value]) =>
             factory.createPropertyAssignment(
-              factory.createIdentifier(camelCase(k)),
-              factory.createStringLiteral(v),
+              factory.createIdentifier(camelCase(key)),
+              factory.createStringLiteral(value),
             ),
           ),
-          true,
         ),
       ),
     ),
-    true,
   );
+}
+
+// -------------------------------------------
+// Buat JSX Attribute dari attributes
+// -------------------------------------------
+function createJsxAttribute(key: string, value: string) {
+  if (key === "style") {
+    return factory.createJsxExpression(
+      undefined,
+      factory.createObjectLiteralExpression(
+        value
+          .split(";")
+          .filter(Boolean)
+          .map((rule) => {
+            const [k, v] = rule.split(":").map((s) => s.trim()) as [
+              string,
+              string,
+            ];
+            return factory.createPropertyAssignment(
+              factory.createIdentifier(camelCase(k)),
+              factory.createStringLiteral(v),
+            );
+          }),
+      ),
+    );
+  }
+
+  if (key === "class") {
+    return factory.createJsxExpression(
+      undefined,
+      factory.createElementAccessExpression(
+        factory.createIdentifier("variants"),
+        factory.createStringLiteral(value),
+      ),
+    );
+  }
+
+  return factory.createStringLiteral(value);
 }
 
 // -------------------------------------------
@@ -50,29 +79,8 @@ function createJsxAttributes(
   return factory.createJsxAttributes(
     Object.entries(attributes).map(([key, value]) => {
       return factory.createJsxAttribute(
-        factory.createIdentifier(
-          camelCase(key !== "class" ? key : "className"),
-        ),
-        key === "style"
-          ? factory.createJsxExpression(
-              undefined,
-              factory.createObjectLiteralExpression(
-                value
-                  .split(";")
-                  .filter(Boolean)
-                  .map((rule) => {
-                    const [k, v] = rule.split(":").map((s) => s.trim()) as [
-                      string,
-                      string,
-                    ];
-                    return factory.createPropertyAssignment(
-                      factory.createIdentifier(camelCase(k)),
-                      factory.createStringLiteral(v),
-                    );
-                  }),
-              ),
-            )
-          : factory.createStringLiteral(value),
+        factory.createIdentifier(camelCase(key !== "class" ? key : "style")),
+        createJsxAttribute(key, value),
       );
     }),
   );
@@ -209,7 +217,7 @@ export function createReactComponent(name: string, root: ElementNode) {
           undefined,
           undefined,
           createArrowFunction(
-            variantsDecl,
+            ...(haveStyle ? [variantsDecl] : []),
             factory.createReturnStatement(
               factory.createParenthesizedExpression(createJsx(root)),
             ),
