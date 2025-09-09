@@ -89,9 +89,11 @@ function createJsxChild(node: ElementNode): JsxChild {
   }
 
   const attributes = createJsxAttributes(node.attributes);
-  const children = (node.children?.filter((v) => v.name !== "defs") ?? []).map(
-    createJsxChild,
-  );
+  // const children = (node.children?.filter((v) => v.name !== "defs") ?? []).map(
+  //   createJsxChild,
+  // );
+
+  const children = node.children?.map((v) => createJsxChild(v)) ?? [];
 
   if (children.length === 0) {
     return factory.createJsxSelfClosingElement(
@@ -175,10 +177,11 @@ export function createReactComponent(name: string, root: ElementNode) {
     factory.createStringLiteral("react"),
   );
 
-  logger.info(root.children);
+  const haveStyle = root.children
+    ?.find((v) => v.name === "defs")
+    ?.children?.find((v) => v.name === "style");
 
   const variantsDecl = factory.createVariableStatement(
-    // [factory.createModifier(SyntaxKind.const)],
     undefined,
     factory.createVariableDeclarationList(
       [
@@ -186,13 +189,17 @@ export function createReactComponent(name: string, root: ElementNode) {
           factory.createIdentifier("variants"),
           undefined,
           undefined,
-          createObjectVariant(root),
+          haveStyle ? createObjectVariant(haveStyle!) : undefined,
         ),
       ],
       NodeFlags.Const,
     ),
   );
 
+  /**
+   * FIX: harusnya ketika class tidak ada pada element
+   * jangan sampai membuat variable (saat ini masih ada variable varian pada hasil)
+   */
   const exportNamed = factory.createVariableStatement(
     [factory.createModifier(SyntaxKind.ExportKeyword)],
     factory.createVariableDeclarationList(
