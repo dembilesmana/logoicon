@@ -6,9 +6,6 @@
       "dependsOn": ["^generate"],
       "outputs": [".assets/**"]
     },
-    "@logoicon/core#generate": {
-      "outputs": [".assets/**"]
-    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
