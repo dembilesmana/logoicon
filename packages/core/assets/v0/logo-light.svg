@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="24"
+   height="11.942857"
+   viewBox="0 0 24 11.942857"
+   fill="none"
+   version="1.1"
+   id="svg2"
+   sodipodi:docname="logo-light.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="4.537931"
+     inkscape:cx="72.5"
+     inkscape:cy="35.919453"
+     inkscape:window-width="1366"
+     inkscape:window-height="699"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <g
+     clip-path="url(#clip0_421_89)"
+     id="g2"
+     transform="scale(0.16587301)">
+    <path
+       d="m 84.7967,0 h 34.5363 c 14.003,0 25.356,11.3524 25.356,25.3563 V 58.2927 H 130.504 V 25.3563 c 0,-0.3374 -0.013,-0.6724 -0.039,-1.0044 L 95.9291,58.2871 c 0.1164,0.0037 0.2333,0.0056 0.3506,0.0056 h 34.2243 v 13.397 H 96.2797 c -14.0039,0 -25.668,-11.4634 -25.668,-25.4673 V 13.3736 h 14.185 v 32.8488 c 0,0.6324 0.0492,1.2574 0.144,1.8702 L 120.236,13.4109 c -0.297,-0.0247 -0.598,-0.0373 -0.903,-0.0373 H 84.7967 Z"
+       fill="#000000"
+       id="path1" />
+    <path
+       d="M 49.9128,69.2224 0,13.3677 H 20.0804 L 49.3843,46.1601 V 13.3677 h 14.973 v 50.3411 c 0,7.5979 -9.3818,11.179 -14.4445,5.5136 z"
+       fill="#000000"
+       id="path2" />
+  </g>
+  <defs
+     id="defs2">
+    <clipPath
+       id="clip0_421_89">
+      <rect
+         width="144.69"
+         height="72"
+         fill="#ffffff"
+         id="rect2"
+         x="0"
+         y="0" />
+    </clipPath>
+  </defs>
+</svg>
