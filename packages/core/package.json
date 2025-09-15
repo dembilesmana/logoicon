@@ -23,14 +23,13 @@
   },
   "scripts": {
     "dev": "tsx watch ./src/index.ts",
-    "generate": "tsx watch ./scripts/generate.ts"
-  },
-  "dependencies": {
-    "@logoicon/logger": "^0.0.0",
-    "@logoicon/util": "^0.0.0"
+    "generate": "tsx ./scripts/generate.ts"
   },
   "devDependencies": {
+    "@logoicon/logger": "^0.0.0",
     "@logoicon/tsconfig": "*",
-    "fast-xml-parser": "^5.2.5"
+    "@logoicon/util": "^0.0.0",
+    "fast-xml-parser": "^5.2.5",
+    "svgo": "^4.0.0"
   }
 }

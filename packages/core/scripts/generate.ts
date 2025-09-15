@@ -7,6 +7,7 @@ import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import { basename, dirname, extname, join } from "node:path";
 import { createIndex } from "../ast/create-index";
 import { createTS } from "../ast/create-svg";
+import { optimize } from "svgo";
 
 const SRCDIR = "assets";
 const OUTDIR = ".assets";
@@ -47,8 +48,52 @@ for await (const asset of assets) {
       createDirs.add(outputPath);
     }
 
-    let parsed = xmlParser.parse(xmlData);
-    delete parsed["?xml"];
+    const optimized = optimize(xmlData, {
+      plugins: [
+        // INFO: Ok
+        "removeDoctype",
+        "removeXMLProcInst",
+        "removeComments",
+        "removeMetadata",
+        "removeEditorsNSData",
+        "removeEmptyAttrs",
+
+        "cleanupAttrs",
+        {
+          name: "inlineStyles", // WARN: Ada kemungkinan jangan digunakan karena defs class akan ditulis sebagai inline style
+          params: {
+            onlyMatchedOnce: false,
+          },
+        },
+
+        {
+          name: "convertStyleToAttrs",
+          params: {
+            keepImportant: true,
+          },
+        },
+        {
+          name: "prefixIds",
+          params: {
+            prefix: true,
+          },
+        },
+        { name: "removeAttrs", params: { attrs: ["data-name"] } },
+        // {
+        //   name: "cleanupIds", // WARN: changed id for minify but maked error
+        //   params: {
+        //     force: true,
+        //   },
+        // },
+        "removeUnusedNS",
+        // "mergePaths",
+        "sortAttrs",
+        "sortDefsChildren",
+        "removeDesc",
+        "removeDimensions",
+      ],
+    });
+    let parsed = xmlParser.parse(optimized.data);
 
     /**
      * INFO: create SVG in json
