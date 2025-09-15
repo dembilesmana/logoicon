@@ -1,6 +1,6 @@
 import * as iconAsset from "@logoicon/core/assets";
 import { logger } from "@logoicon/logger";
-import { normalize, pascalCase } from "@logoicon/util";
+import { kebabCase, normalize, pascalCase } from "@logoicon/util";
 import { createWriteStream, mkdirSync, rmSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -10,9 +10,7 @@ import { converter } from "./converter";
 
 let assets = Object.entries(iconAsset);
 
-// logger.level = "debug";
-
-const OUTDIR = "dist";
+const OUTDIR = ".dist";
 
 rmSync(OUTDIR, { recursive: true, force: true });
 mkdirSync(OUTDIR);
@@ -22,20 +20,19 @@ const stream = createWriteStream(join(OUTDIR, "index.ts"));
 /**
  * INFO: Generate components
  */
-assets = assets.filter((v) => v[0].includes("gitlab"));
-
 for (const [key, value] of assets) {
   const title = normalize(key);
-  const [brand, name] = title.split(" ") as [string, string];
+  const [brand, ...name] = title.split(" ") as [string, string];
   const OUTBRAND = join(OUTDIR, brand);
 
-  const path = join(OUTBRAND, name + ".tsx");
+  const path = join(OUTBRAND, kebabCase(name.join(" ")) + ".tsx");
   await mkdir(OUTBRAND, { recursive: true });
 
-  const metadata = { name, title, brand, path };
+  const metadata = { name: kebabCase(name.join(" ")), title, brand, path };
 
   const convertion = converter(value);
   logger.debug(convertion);
+
   const component = createReactComponent(pascalCase(key), convertion);
   await writeFile(path, component, {
     encoding: "utf-8",

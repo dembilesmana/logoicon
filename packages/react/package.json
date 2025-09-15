@@ -16,22 +16,22 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.ts"
+      "import": "./.dist/index.ts"
     },
     "./*": {
-      "import": "./dist/*.tsx"
+      "import": "./.dist/*.tsx"
     }
   },
   "scripts": {
-    "generate": "tsx watch ./scripts/generate.ts"
+    "generate": "tsx ./scripts/generate.ts"
   },
   "dependencies": {
-    "@logoicon/logger": "*"
+    "@logoicon/core": "*",
+    "@logoicon/util": "*"
   },
   "devDependencies": {
-    "@logoicon/core": "*",
     "@logoicon/eslintconfig": "*",
-    "@logoicon/tsconfig": "*",
-    "@logoicon/util": "*"
+    "@logoicon/logger": "*",
+    "@logoicon/tsconfig": "*"
   }
 }
