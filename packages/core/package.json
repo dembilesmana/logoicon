@@ -13,8 +13,8 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
+      "types": "./.dist/index.d.ts",
+      "require": "./.dist/index.cjs",
       "import": "./src/index.ts"
     },
     "./assets": {

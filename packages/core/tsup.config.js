@@ -5,6 +5,7 @@ export default defineConfig((options) => ({
     index: "./src/index.ts",
     meta: "./build/metadata.ts",
   },
+  outDir: ".dist",
   dts: true,
   format: ["cjs", "esm"],
   splitting: false,
