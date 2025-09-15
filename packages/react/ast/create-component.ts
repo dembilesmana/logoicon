@@ -14,24 +14,6 @@ import {
 } from "typescript";
 import { ElementNode } from "../scripts/converter";
 
-function createObjectVariant(element: ElementNode) {
-  return factory.createObjectLiteralExpression(
-    element.children!.map(({ name, attributes }) =>
-      factory.createPropertyAssignment(
-        factory.createStringLiteral(name ?? "default"),
-        factory.createObjectLiteralExpression(
-          Object.entries(attributes!).map(([key, value]) =>
-            factory.createPropertyAssignment(
-              factory.createIdentifier(camelCase(key)),
-              factory.createStringLiteral(value),
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
 // -------------------------------------------
 // Buat JSX Attribute dari attributes
 // -------------------------------------------
@@ -97,11 +79,12 @@ function createJsxChild(node: ElementNode): JsxChild {
   }
 
   const attributes = createJsxAttributes(node.attributes);
-  // const children = (node.children?.filter((v) => v.name !== "defs") ?? []).map(
-  //   createJsxChild,
-  // );
 
-  const children = node.children?.map((v) => createJsxChild(v)) ?? [];
+  const children =
+    node.children
+      // INFO: Don't write style
+      ?.filter((v) => v.name !== "style")
+      ?.map((v) => createJsxChild(v)) ?? [];
 
   if (children.length === 0) {
     return factory.createJsxSelfClosingElement(
@@ -111,14 +94,16 @@ function createJsxChild(node: ElementNode): JsxChild {
     );
   }
 
+  const externalProps =
+    node.name === "svg"
+      ? [factory.createJsxSpreadAttribute(factory.createIdentifier("props"))]
+      : [];
+
   return factory.createJsxElement(
     factory.createJsxOpeningElement(
       factory.createIdentifier(node.name ?? "Unknown"),
       undefined,
-      factory.createJsxAttributes([
-        factory.createJsxSpreadAttribute(factory.createIdentifier("props")),
-        ...attributes.properties,
-      ]),
+      factory.createJsxAttributes([...externalProps, ...attributes.properties]),
     ),
     children,
     factory.createJsxClosingElement(
@@ -185,25 +170,6 @@ export function createReactComponent(name: string, root: ElementNode) {
     factory.createStringLiteral("react"),
   );
 
-  const haveStyle = root.children
-    ?.find((v) => v.name === "defs")
-    ?.children?.find((v) => v.name === "style");
-
-  const variantsDecl = factory.createVariableStatement(
-    undefined,
-    factory.createVariableDeclarationList(
-      [
-        factory.createVariableDeclaration(
-          factory.createIdentifier("variants"),
-          undefined,
-          undefined,
-          haveStyle ? createObjectVariant(haveStyle!) : undefined,
-        ),
-      ],
-      NodeFlags.Const,
-    ),
-  );
-
   /**
    * FIX: harusnya ketika class tidak ada pada element
    * jangan sampai membuat variable (saat ini masih ada variable varian pada hasil)
@@ -217,7 +183,6 @@ export function createReactComponent(name: string, root: ElementNode) {
           undefined,
           undefined,
           createArrowFunction(
-            ...(haveStyle ? [variantsDecl] : []),
             factory.createReturnStatement(
               factory.createParenthesizedExpression(createJsx(root)),
             ),
