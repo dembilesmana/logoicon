@@ -8,6 +8,7 @@ import { basename, dirname, extname, join } from "node:path";
 import { createIndex } from "../ast/create-index";
 import { createTS } from "../ast/create-svg";
 import { optimize } from "svgo";
+import { loadConfig, optimize } from "svgo";
 
 const SRCDIR = "assets";
 const OUTDIR = ".assets";
@@ -48,51 +49,9 @@ for await (const asset of assets) {
       createDirs.add(outputPath);
     }
 
-    const optimized = optimize(xmlData, {
-      plugins: [
-        // INFO: Ok
-        "removeDoctype",
-        "removeXMLProcInst",
-        "removeComments",
-        "removeMetadata",
-        "removeEditorsNSData",
-        "removeEmptyAttrs",
+    const svgoConfig = await loadConfig();
 
-        "cleanupAttrs",
-        {
-          name: "inlineStyles", // WARN: Ada kemungkinan jangan digunakan karena defs class akan ditulis sebagai inline style
-          params: {
-            onlyMatchedOnce: false,
-          },
-        },
-
-        {
-          name: "convertStyleToAttrs",
-          params: {
-            keepImportant: true,
-          },
-        },
-        {
-          name: "prefixIds",
-          params: {
-            prefix: true,
-          },
-        },
-        { name: "removeAttrs", params: { attrs: ["data-name"] } },
-        // {
-        //   name: "cleanupIds", // WARN: changed id for minify but maked error
-        //   params: {
-        //     force: true,
-        //   },
-        // },
-        "removeUnusedNS",
-        // "mergePaths",
-        "sortAttrs",
-        "sortDefsChildren",
-        "removeDesc",
-        "removeDimensions",
-      ],
-    });
+    const optimized = optimize(xmlData, svgoConfig!);
     let parsed = xmlParser.parse(optimized.data);
 
     /**
