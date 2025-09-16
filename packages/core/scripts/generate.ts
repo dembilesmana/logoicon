@@ -1,14 +1,22 @@
-import type { Metadata } from "../ast/create-index";
-
 import { logger } from "@logoicon/logger";
+import { normalize } from "@logoicon/util";
 import { XMLParser } from "fast-xml-parser";
 import { createWriteStream, mkdirSync, rmSync } from "node:fs";
 import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
 import { basename, dirname, extname, join } from "node:path";
-import { createIndex } from "../ast/create-index";
-import { createTS } from "../ast/create-svg";
-import { optimize } from "svgo";
+import pluralize from "pluralize";
 import { loadConfig, optimize } from "svgo";
+import { createExport } from "../ast/create-export";
+import { createMetadata, createObjectMetadata } from "../ast/create-metadata";
+import { createTS } from "../ast/create-svg";
+
+export type Metadata = {
+  category: string;
+  name: string;
+  brand: string;
+  title: string;
+  path: string;
+};
 
 const SRCDIR = "assets";
 const OUTDIR = ".assets";
@@ -18,24 +26,30 @@ mkdirSync(OUTDIR);
 
 const assets = await opendir(SRCDIR, { recursive: true });
 
-const stream = createWriteStream(join(OUTDIR, "index.ts"));
-
 const createDirs = new Set();
 
 const xmlParser = new XMLParser({
   ignoreAttributes: false,
 });
 
+const streamIndex = createWriteStream(join(OUTDIR, "index.ts"));
+const streamMetadata = createWriteStream(join(OUTDIR, "metadata.json"));
+
+streamMetadata.write("[\n");
+// Tambahkan flag untuk menyisipkan koma antar item
+let isFirstMetadata = true;
+
 for await (const asset of assets) {
   if (asset.isFile()) {
     const name = basename(asset.name, extname(asset.name));
+    const category = pluralize(name.split("-").at(0)!);
     const brand = asset.parentPath.split("/").at(-1)!;
-    const title = [brand, name].join(" ");
+    const title = [brand, normalize(name)].join(" ");
     const inputPath = join(asset.parentPath, asset.name);
     const outputPath = `.${dirname(inputPath)}`;
     const path = `${join(outputPath, name)}.ts`;
 
-    const metadata: Metadata = { name, title, brand, path };
+    const metadata: Metadata = { name, category, title, brand, path };
 
     const xmlData = await readFile(inputPath, { encoding: "utf-8" }).catch(
       (error) => {
@@ -50,7 +64,6 @@ for await (const asset of assets) {
     }
 
     const svgoConfig = await loadConfig();
-
     const optimized = optimize(xmlData, svgoConfig!);
     let parsed = xmlParser.parse(optimized.data);
 
@@ -73,23 +86,25 @@ for await (const asset of assets) {
     /**
      * INFO: create Index of SVG
      */
-    const createIndexFile = await createIndex(metadata);
-    stream.write(createIndexFile);
+    const createIndexFile = await createExport(metadata);
+    streamIndex.write(createIndexFile);
 
     /**
      * INFO: create metadata of SVG
+     * Sisipkan koma sebelum item kecuali untuk item pertama
      */
-    // log({
-    //   name,
-    //   title,
-    //   brand,
-    //   path,
-    // });
-
-    // await metadata(pathList, { write: true, extensions: ["ts"] });
+    if (!isFirstMetadata) {
+      streamMetadata.write(",\n");
+    }
+    const metaObject = createMetadata(metadata);
+    streamMetadata.write(metaObject);
+    isFirstMetadata = false;
   }
 }
 
-stream.end();
+streamMetadata.write("\n]");
+streamMetadata.end();
+
+streamIndex.end();
 
 logger.info("generate finish");

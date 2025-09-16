@@ -29,7 +29,9 @@
     "@logoicon/logger": "^0.0.0",
     "@logoicon/tsconfig": "*",
     "@logoicon/util": "^0.0.0",
+    "@types/pluralize": "^0.0.33",
     "fast-xml-parser": "^5.2.5",
+    "pluralize": "^8.0.0",
     "svgo": "^4.0.0"
   }
 }
