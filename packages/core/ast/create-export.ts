@@ -7,13 +7,8 @@ import {
   NodeFlags,
   SyntaxKind,
 } from "typescript";
-
-export type Metadata = {
-  name: string;
-  brand: string;
-  title: string;
-  path: string;
-};
+import { Metadata } from "../scripts/generate";
+import { logger } from "@logoicon/logger";
 
 function createExportDeclaration(meta: Metadata) {
   const exports = factory.createExportDeclaration(
@@ -32,7 +27,7 @@ function createExportDeclaration(meta: Metadata) {
   return exports;
 }
 
-export async function createIndex(meta: Metadata) {
+export async function createExport(meta: Metadata) {
   const sourceFile = factory.createSourceFile(
     [createExportDeclaration(meta)],
     factory.createToken(SyntaxKind.EndOfFileToken),
@@ -42,5 +37,7 @@ export async function createIndex(meta: Metadata) {
   const printer = createPrinter({ newLine: NewLineKind.LineFeed });
   const script = printer.printFile(sourceFile);
 
+  logger.debug(script);
+  logger.info("Create export");
   return script;
 }
