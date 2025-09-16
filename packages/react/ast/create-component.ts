@@ -10,7 +10,7 @@ import {
   NewLineKind,
   NodeFlags,
   Statement,
-  SyntaxKind,
+  SyntaxKind
 } from "typescript";
 import { ElementNode } from "../scripts/converter";
 
@@ -35,16 +35,6 @@ function createJsxAttribute(key: string, value: string) {
               factory.createStringLiteral(v),
             );
           }),
-      ),
-    );
-  }
-
-  if (key === "class") {
-    return factory.createJsxExpression(
-      undefined,
-      factory.createElementAccessExpression(
-        factory.createIdentifier("variants"),
-        factory.createStringLiteral(value),
       ),
     );
   }
@@ -206,7 +196,7 @@ export function createReactComponent(name: string, root: ElementNode) {
   );
 
   const printer = createPrinter({ newLine: NewLineKind.LineFeed });
-  const script = printer.printFile(sourceFile);
 
-  return script;
+
+  return printer.printFile(sourceFile);
 }
