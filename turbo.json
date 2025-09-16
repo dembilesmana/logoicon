@@ -15,7 +15,6 @@
     "dev": {
       "dependsOn": ["^generate"],
       "cache": false,
-      "interruptible": true,
       "persistent": true
     }
   }
