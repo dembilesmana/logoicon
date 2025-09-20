@@ -1,8 +1,9 @@
 import type { Logger, LoggerOptions } from "pino";
 
 import { readFileSync } from "fs";
-import path from "path";
+import { resolve } from "path";
 import pino from "pino";
+import deepmerge from "deepmerge";
 
 const defaultOptions: LoggerOptions = {
   level: process.env.LOG_LEVEL || "info",
@@ -18,7 +19,7 @@ const defaultOptions: LoggerOptions = {
 
 function getCallerPackageName(): string | undefined {
   try {
-    const pkgPath = path.resolve(process.cwd(), "package.json");
+    const pkgPath = resolve(process.cwd(), "package.json");
     const pkg = JSON.parse(readFileSync(pkgPath, "utf-8"));
     return pkg.name;
   } catch {
@@ -26,17 +27,12 @@ function getCallerPackageName(): string | undefined {
   }
 }
 
-export function createLogger(options?: LoggerOptions): Logger {
+export function createLogger(options?: Partial<LoggerOptions>): Logger {
   const pkgName = getCallerPackageName();
 
   return pino({
-    ...defaultOptions,
-    ...options,
     name: options?.name || pkgName,
-    transport: {
-      ...defaultOptions.transport,
-      ...options?.transport,
-    },
+    ...deepmerge(defaultOptions, options || {}),
   });
 }
 
