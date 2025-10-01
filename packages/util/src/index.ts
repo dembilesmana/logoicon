@@ -1,3 +1,6 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 export function normalize(text: string): string {
   return text
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2") // Pisahkan huruf besar yang berada di tengah kata (camel/Pascal → spasi)
@@ -28,6 +31,10 @@ export function pascalCase(text: string): string {
 export function kebabCase(text: string): string {
   text = normalize(text);
   return text.replace(/\s+/g, "-");
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(...inputs));
 }
 
 // type CaseType = "pascal" | "camel" | "kebab" | "snake";
