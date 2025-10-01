@@ -1,110 +1,219 @@
 import { logger } from "@logoicon/logger";
-import { normalize } from "@logoicon/util";
-import { XMLParser } from "fast-xml-parser";
 import { createWriteStream, mkdirSync, rmSync } from "node:fs";
-import { mkdir, opendir, readFile, writeFile } from "node:fs/promises";
-import { basename, dirname, extname, join } from "node:path";
-import pluralize from "pluralize";
-import { loadConfig, optimize } from "svgo";
-import { createExport } from "../ast/create-export";
-import { createMetadata, createObjectMetadata } from "../ast/create-metadata";
-import { createTS } from "../ast/create-svg";
+import { opendir } from "node:fs/promises";
+import { join } from "node:path";
 
-export type Metadata = {
-  category: string;
-  name: string;
-  brand: string;
-  title: string;
-  path: string;
-};
+// Import our new modules
+import { getConfig } from "./config/generation.config";
+import { createConcurrencyLimiter } from "./lib/concurrency-limiter";
+import { createFileGenerator } from "./lib/file-generator";
+import { IndexStreamWriter, MetadataStreamWriter } from "./lib/stream-writer";
+import { createSvgProcessor } from "./lib/svg-processor";
+import { AssetEntry } from "./types/generation.types";
+import { createAssetPaths } from "./utils/path-utils";
 
-const SRCDIR = "assets";
-const OUTDIR = ".assets";
+// Re-export types for backward compatibility
+export type { Metadata } from "./types/generation.types";
 
-rmSync(OUTDIR, { recursive: true, force: true });
-mkdirSync(OUTDIR);
+/**
+ * Setup the generation environment
+ */
+async function setupEnvironment(): Promise<void> {
+  const config = getConfig();
 
-const assets = await opendir(SRCDIR, { recursive: true });
+  logger.info(
+    {
+      sourceDir: config.SRCDIR,
+      outputDir: config.OUTDIR,
+      maxConcurrency: config.MAX_CONCURRENCY,
+    },
+    "Setting up generation environment",
+  );
 
-const createDirs = new Set();
+  // Clean and recreate output directory
+  rmSync(config.OUTDIR, { recursive: true, force: true });
+  mkdirSync(config.OUTDIR);
 
-const xmlParser = new XMLParser({
-  ignoreAttributes: false,
-});
+  logger.debug("Environment setup completed");
+}
 
-const streamIndex = createWriteStream(join(OUTDIR, "index.ts"));
-const streamMetadata = createWriteStream(join(OUTDIR, "metadata.json"));
+/**
+ * Collect all asset files from the source directory
+ */
+async function collectAssetFiles(): Promise<AssetEntry[]> {
+  const config = getConfig();
+  const assets = await opendir(config.SRCDIR, { recursive: true });
+  const files: AssetEntry[] = [];
 
-streamMetadata.write("[\n");
-// Tambahkan flag untuk menyisipkan koma antar item
-let isFirstMetadata = true;
+  logger.info({ sourceDir: config.SRCDIR }, "Collecting asset files");
 
-for await (const asset of assets) {
-  if (asset.isFile()) {
-    const name = basename(asset.name, extname(asset.name));
-    const category = pluralize(name.split("-").at(0)!);
-    const brand = asset.parentPath.split("/").at(-1)!;
-    const title = [brand, normalize(name)].join(" ");
-    const inputPath = join(asset.parentPath, asset.name);
-    const outputPath = `.${dirname(inputPath)}`;
-    const path = `${join(outputPath, name)}.ts`;
+  for await (const entry of assets) {
+    if (entry.isFile()) {
+      files.push({
+        name: entry.name,
+        parentPath: entry.parentPath,
+        isFile: () => true,
+      });
+    }
+  }
 
-    const metadata: Metadata = { name, category, title, brand, path };
+  logger.info(
+    {
+      totalFiles: files.length,
+      sourceDir: config.SRCDIR,
+    },
+    "Asset files collected",
+  );
 
-    const xmlData = await readFile(inputPath, { encoding: "utf-8" }).catch(
-      (error) => {
-        logger.trace(error, "read file", inputPath);
-        throw new Error(error);
+  return files;
+}
+
+/**
+ * Initialize stream writers
+ */
+function createStreamWriters(): {
+  indexWriter: IndexStreamWriter;
+  metadataWriter: MetadataStreamWriter;
+} {
+  const config = getConfig();
+
+  const indexStream = createWriteStream(join(config.OUTDIR, "index.ts"));
+  const metadataStream = createWriteStream(
+    join(config.OUTDIR, "metadata.ndjson"),
+  );
+
+  const indexWriter = new IndexStreamWriter(indexStream);
+  const metadataWriter = new MetadataStreamWriter(metadataStream);
+
+  logger.debug("Stream writers initialized");
+
+  return { indexWriter, metadataWriter };
+}
+
+/**
+ * Process all asset files with concurrency control
+ */
+async function processAllFiles(files: AssetEntry[]): Promise<void> {
+  const config = getConfig();
+
+  logger.info(
+    {
+      totalFiles: files.length,
+      maxConcurrency: config.MAX_CONCURRENCY,
+    },
+    "Starting file processing",
+  );
+
+  // Initialize dependencies
+  const limiter = createConcurrencyLimiter(config.MAX_CONCURRENCY);
+  const svgProcessor = await createSvgProcessor();
+  const { indexWriter, metadataWriter } = createStreamWriters();
+  const fileGenerator = createFileGenerator(
+    svgProcessor,
+    indexWriter,
+    metadataWriter,
+  );
+
+  // Initialize progress tracking
+  fileGenerator.initializeProgress(files.length);
+
+  // Process files with concurrency control
+  const processingPromises = files.map((file) =>
+    limiter.run(async () => {
+      try {
+        const assetPaths = createAssetPaths(file.parentPath, file.name);
+        await fileGenerator.processAssetFile(assetPaths);
+      } catch (error) {
+        logger.error(
+          {
+            fileName: file.name,
+            parentPath: file.parentPath,
+            error,
+          },
+          "Failed to process file",
+        );
+        throw error;
+      }
+    }),
+  );
+
+  // Wait for all files to be processed
+  try {
+    await Promise.all(processingPromises);
+    await limiter.onIdle();
+    await fileGenerator.finalize();
+
+    logger.info(
+      {
+        totalFiles: files.length,
       },
+      "File processing completed successfully",
     );
+  } catch (error) {
+    logger.error({ error }, "File processing failed");
 
-    if (!createDirs.has(outputPath)) {
-      await mkdir(outputPath, { recursive: true });
-      createDirs.add(outputPath);
+    // Attempt to cleanup streams even if processing failed
+    try {
+      await fileGenerator.finalize();
+    } catch (cleanupError) {
+      logger.error(
+        {
+          cleanupError,
+        },
+        "Failed to cleanup after processing error",
+      );
     }
 
-    const svgoConfig = await loadConfig();
-    const optimized = optimize(xmlData, svgoConfig!);
-    let parsed = xmlParser.parse(optimized.data);
-
-    /**
-     * INFO: create SVG in json
-     */
-    writeFile(`${join(outputPath, name)}.json`, JSON.stringify(parsed)).catch(
-      (error) => {
-        logger.trace(error, "write file", outputPath, parsed);
-        throw new Error(error);
-      },
-    );
-
-    /**
-     * INFO: create SVG in ts
-     */
-    const createTSFile = createTS(title, parsed);
-    writeFile(`${join(outputPath, name)}.ts`, createTSFile);
-
-    /**
-     * INFO: create Index of SVG
-     */
-    const createIndexFile = await createExport(metadata);
-    streamIndex.write(createIndexFile);
-
-    /**
-     * INFO: create metadata of SVG
-     * Sisipkan koma sebelum item kecuali untuk item pertama
-     */
-    if (!isFirstMetadata) {
-      streamMetadata.write(",\n");
-    }
-    const metaObject = createMetadata(metadata);
-    streamMetadata.write(metaObject);
-    isFirstMetadata = false;
+    throw error;
   }
 }
 
-streamMetadata.write("\n]");
-streamMetadata.end();
+/**
+ * Main generation function
+ */
+async function generateAssets(): Promise<void> {
+  const startTime = Date.now();
 
-streamIndex.end();
+  try {
+    logger.info("Starting asset generation");
 
-logger.info("generate finish");
+    await setupEnvironment();
+    const files = await collectAssetFiles();
+    await processAllFiles(files);
+
+    const duration = Date.now() - startTime;
+    logger.info(
+      {
+        duration: `${duration}ms`,
+        totalFiles: files.length,
+        avgTimePerFile: `${(duration / files.length).toFixed(2)}ms`,
+      },
+      "Asset generation completed successfully",
+    );
+  } catch (error) {
+    const duration = Date.now() - startTime;
+    logger.error(
+      {
+        error,
+        duration: `${duration}ms`,
+      },
+      "Asset generation failed",
+    );
+    throw error;
+  }
+}
+
+/**
+ * Run generation if this file is executed directly
+ */
+if (import.meta.url === `file://${process.argv[1]}`) {
+  generateAssets()
+    .then(() => {
+      logger.info("Generation process finished successfully");
+      process.exit(0);
+    })
+    .catch((error) => {
+      logger.error({ error }, "Generation process failed");
+      process.exit(1);
+    });
+}
