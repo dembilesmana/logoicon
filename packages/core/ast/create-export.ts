@@ -1,3 +1,4 @@
+import { logger } from "@logoicon/logger";
 import { camelCase } from "@logoicon/util";
 import { join } from "node:path";
 import {
@@ -8,7 +9,6 @@ import {
   SyntaxKind,
 } from "typescript";
 import { Metadata } from "../scripts/generate";
-import { logger } from "@logoicon/logger";
 
 function createExportDeclaration(meta: Metadata) {
   const exports = factory.createExportDeclaration(
@@ -38,6 +38,6 @@ export async function createExport(meta: Metadata) {
   const script = printer.printFile(sourceFile);
 
   logger.debug(script);
-  logger.info("Create export");
+  logger.info({ script }, "Create export");
   return script;
 }
