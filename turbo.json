@@ -3,19 +3,29 @@
   "ui": "tui",
   "tasks": {
     "generate": {
+      "cache": false
+    },
+    "@logoicon/core#generate": {
       "cache": false,
       "outputs": [".dist/**", ".assets/**"]
     },
     "@logoicon/react#generate": {
-      "dependsOn": ["^generate"],
       "cache": false,
+      "dependsOn": ["^generate"],
       "inputs": ["$TURBO_DEFAULT$", "../core/.assets/**", "../core/.dist/**"],
       "outputs": [".dist/**"]
     },
-    "dev": {
-      "dependsOn": ["^generate"],
+    "web#dev": {
       "cache": false,
+      "dependsOn": ["^generate"],
       "persistent": true
+    },
+    "web#build": {
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
     }
   }
 }
