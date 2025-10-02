@@ -1,6 +1,6 @@
 {
   "name": "@logoicon/react",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "react component of logoicon",
   "keywords": [
     "logo icon",
@@ -26,12 +26,11 @@
     "generate": "tsx ./scripts/generate.ts"
   },
   "dependencies": {
-    "@logoicon/core": "*",
-    "@logoicon/util": "*"
+    "@logoicon/core": "^1.0.0"
   },
   "devDependencies": {
-    "@logoicon/eslintconfig": "*",
-    "@logoicon/logger": "*",
-    "@logoicon/tsconfig": "*"
+    "@logoicon/eslintconfig": "^1.0.0",
+    "@logoicon/logger": "^1.0.0",
+    "@logoicon/tsconfig": "^1.0.0"
   }
 }
