@@ -12,7 +12,6 @@
       "outputs": ["dist/**"]
     },
     "generate": {
-      "cache": false,
       "dependsOn": ["^generate"],
       "outputs": [".dist/**"]
     },
@@ -20,7 +19,8 @@
       "outputs": [".assets/**"]
     },
     "@logoicon/react#generate": {
-      "inputs": ["$TURBO_DEFAULT$", "../core/.assets/**", "../core/.dist/**"]
+      "dependsOn": ["^generate"],
+      "inputs": ["$TURBO_DEFAULT$"]
     },
     "web#build": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
