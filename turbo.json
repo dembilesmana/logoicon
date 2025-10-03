@@ -8,12 +8,10 @@
       "persistent": true
     },
     "build": {
-      "cache": false,
-      "dependsOn": ["^generate", "^build"],
+      "dependsOn": ["generate", "^build"],
       "outputs": ["dist/**"]
     },
     "generate": {
-      "cache": false,
       "dependsOn": ["^generate"],
       "outputs": [".dist/**"]
     },
