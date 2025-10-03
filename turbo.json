@@ -12,6 +12,7 @@
       "outputs": ["dist/**"]
     },
     "generate": {
+      "cache": false,
       "dependsOn": ["^generate"],
       "outputs": [".dist/**"]
     },
