@@ -46,7 +46,7 @@ function convertNode(name: string, node: any): ElementNode {
           })),
         });
       } catch (error) {
-        logger.debug("Failed to parse CSS: ", error);
+        logger.debug(error, "Failed to parse CSS:");
       }
     } else {
       // Child element

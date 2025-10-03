@@ -10,7 +10,7 @@ import {
   NewLineKind,
   NodeFlags,
   Statement,
-  SyntaxKind
+  SyntaxKind,
 } from "typescript";
 import { ElementNode } from "../scripts/converter";
 
@@ -62,7 +62,7 @@ function createJsxAttributes(
 // Buat JSX Child dari ElementNode
 // -------------------------------------------
 function createJsxChild(node: ElementNode): JsxChild {
-  logger.debug("Creating JSX Child for node:", node);
+  logger.debug(node, "Creating JSX Child for node:");
 
   if (node.type === "Text") {
     return factory.createJsxText(node.value ?? "");
@@ -106,7 +106,7 @@ function createJsxChild(node: ElementNode): JsxChild {
 // Buat JSX dari root AST
 // -------------------------------------------
 function createJsx(root: ElementNode): JsxElement {
-  logger.debug("Creating JSX for root:", root);
+  logger.debug(root, "Creating JSX for root:");
 
   return createJsxChild(root) as JsxElement;
 }
@@ -143,7 +143,7 @@ function createArrowFunction(...statement: Statement[]): ArrowFunction {
 // Generate React Component dari AST
 // -------------------------------------------
 export function createReactComponent(name: string, root: ElementNode) {
-  logger.debug("Generating React component:", name);
+  logger.debug({ name }, "Generating React component:");
   const importTypeReact = factory.createImportDeclaration(
     undefined,
     factory.createImportClause(
@@ -196,7 +196,6 @@ export function createReactComponent(name: string, root: ElementNode) {
   );
 
   const printer = createPrinter({ newLine: NewLineKind.LineFeed });
-
 
   return printer.printFile(sourceFile);
 }

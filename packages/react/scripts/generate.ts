@@ -57,19 +57,23 @@ try {
   const ndjson = await readFile(coreMetaPath, "utf-8");
   const lines = ndjson
     .split(/\r?\n/)
-    .map(l => l.trim())
+    .map((l) => l.trim())
     .filter(Boolean);
-  const metaArray = lines.map(line => JSON.parse(line));
+  const metaArray = lines.map((line) => JSON.parse(line));
 
   const script = createReactMetadata(metaArray as any);
   await writeFile(join(OUTDIR, "metadata.ts"), script, { encoding: "utf-8" });
 
   // Append exports to index.ts
-  indexStream.write('\n');
-  indexStream.write('export { metadata, listBrands, listCategories, getAll, paginate } from "./metadata";\n');
-  indexStream.write('export type { IconMeta, IconMetaConst } from "./metadata";\n');
+  indexStream.write("\n");
+  indexStream.write(
+    'export { metadata, listBrands, listCategories, getAll, paginate } from "./metadata";\n',
+  );
+  indexStream.write(
+    'export type { IconMeta, IconMetaConst } from "./metadata";\n',
+  );
 
-  logger.info("Generate components & metadata", "DONE");
+  logger.info("Generate components & metadata DONE");
 } catch (err) {
   logger.error({ err }, "Failed to generate React metadata");
   throw err;
