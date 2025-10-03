@@ -2,23 +2,26 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "tasks": {
-    "generate": {
-      "cache": false
-    },
-    "@logoicon/core#generate": {
+    "dev": {
       "cache": false,
-      "outputs": [".dist/**", ".assets/**"]
+      "dependsOn": ["^generate", "^build"],
+      "persistent": true
     },
-    "@logoicon/react#generate": {
+    "build": {
+      "cache": false,
+      "dependsOn": ["^generate", "^build"],
+      "outputs": ["dist/**"]
+    },
+    "generate": {
       "cache": false,
       "dependsOn": ["^generate"],
-      "inputs": ["$TURBO_DEFAULT$", "../core/.assets/**", "../core/.dist/**"],
       "outputs": [".dist/**"]
     },
-    "web#dev": {
-      "cache": false,
-      "dependsOn": ["^generate"],
-      "persistent": true
+    "@logoicon/core#generate": {
+      "outputs": [".assets/**"]
+    },
+    "@logoicon/react#generate": {
+      "inputs": ["$TURBO_DEFAULT$", "../core/.assets/**", "../core/.dist/**"]
     },
     "web#build": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
