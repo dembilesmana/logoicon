@@ -1,7 +1,3 @@
 {
-  "extends": "@logoicon/tsconfig/react-library.json",
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-  "exclude": ["node_modules", "dist"]
+  "extends": "@logoicon/tsconfig/react-library.json"
 }

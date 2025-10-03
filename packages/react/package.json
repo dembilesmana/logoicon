@@ -16,14 +16,44 @@
   "type": "module",
   "exports": {
     ".": {
-      "import": "./.dist/index.ts"
+      "import": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "require": {
+        "default": "./dist/index.cjs",
+        "types": "./dist/index.d.cts"
+      }
     },
     "./*": {
-      "import": "./.dist/*.tsx"
+      "import": {
+        "default": "./dist/**/*.js",
+        "types": "./dist/**/*.d.ts"
+      },
+      "require": {
+        "default": "./dist/**/*.cjs",
+        "types": "./dist/**/*.d.cts"
+      }
+    },
+    "./metadata": {
+      "import": {
+        "default": "./dist/metadata.js",
+        "types": "./dist/metadata.d.ts"
+      },
+      "require": {
+        "default": "./dist/metadata.cjs",
+        "types": "./dist/metadata.d.cts"
+      }
     }
   },
+  "files": [
+    "./dist",
+    "./CHANGELOG.md"
+  ],
   "scripts": {
-    "generate": "tsx ./scripts/generate.ts"
+    "build": "tsup",
+    "generate": "tsx ./scripts/generate.ts",
+    "tsc": "tsc -p ./tsconfig.json"
   },
   "dependencies": {
     "@logoicon/core": "^1.0.0"
@@ -32,5 +62,8 @@
     "@logoicon/eslintconfig": "^1.0.0",
     "@logoicon/logger": "^1.0.0",
     "@logoicon/tsconfig": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
