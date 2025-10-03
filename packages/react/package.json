@@ -55,10 +55,8 @@
     "generate": "tsx ./scripts/generate.ts",
     "tsc": "tsc -p ./tsconfig.json"
   },
-  "dependencies": {
-    "@logoicon/core": "^1.0.1"
-  },
   "devDependencies": {
+    "@logoicon/core": "^1.0.1",
     "@logoicon/eslintconfig": "^1.0.1",
     "@logoicon/logger": "^1.0.1",
     "@logoicon/tsconfig": "^1.0.1"
