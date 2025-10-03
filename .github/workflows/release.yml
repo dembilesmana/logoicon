@@ -2,6 +2,9 @@ name: Release
 
 on:
   push:
+    paths:
+      - "packages/**"
+      - ".changeset/**"
     branches:
       - main
 
