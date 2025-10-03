@@ -1,5 +1,11 @@
 # @logoicon/eslintconfig
 
+## 1.0.2
+
+### Patch Changes
+
+- fix @logoicon/core is not deps but devDeps
+
 ## 1.0.1
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # web
 
+## 1.0.2
+
+### Patch Changes
+
+- fix @logoicon/core is not deps but devDeps
+- Updated dependencies
+  - @logoicon/react@1.0.2
+  - @logoicon/util@1.0.2
+
 ## 1.0.1
 
 ### Patch Changes
