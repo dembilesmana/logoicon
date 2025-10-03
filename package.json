@@ -11,7 +11,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --filter=!web",
     "changeset": "changeset",
     "check-types": "turbo run check-types",
     "dev": "turbo watch dev --filter=web",
