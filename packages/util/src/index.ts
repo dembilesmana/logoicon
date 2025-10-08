@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 export function normalize(text: string): string {
   return text
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2") // Pisahkan huruf besar yang berada di tengah kata (camel/Pascal → spasi)
-    .replace(/[\s-_]+/g, " ") // Ganti pemisah non-huruf/angka (kebab, snake) jadi spasi
+    .replace(/[\s:_-]+/g, " ") // Ganti pemisah non-huruf/angka (kebab, snake) jadi spasi
     .trim()
     .toLowerCase();
 }
