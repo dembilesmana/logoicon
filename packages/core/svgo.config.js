@@ -1,3 +1,4 @@
+import crypto from "crypto";
 /**
  * @type {import('svgo').Config}
  */
@@ -28,7 +29,7 @@ export default {
     {
       name: "prefixIds",
       params: {
-        prefix: true,
+        prefix: () => crypto.randomBytes(4).toString("hex"),
       },
     },
     { name: "removeAttrs", params: { attrs: ["data-name"] } },
