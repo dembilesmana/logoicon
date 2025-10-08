@@ -1,6 +1,6 @@
 {
   "name": "@logoicon/core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "core of logoicon",
   "keywords": [],
@@ -26,9 +26,9 @@
     "generate": "tsx ./scripts/generate.ts"
   },
   "devDependencies": {
-    "@logoicon/logger": "^1.0.2",
-    "@logoicon/tsconfig": "^1.0.2",
-    "@logoicon/util": "^1.0.2",
+    "@logoicon/logger": "^1.0.3",
+    "@logoicon/tsconfig": "^1.0.3",
+    "@logoicon/util": "^1.0.3",
     "@types/pluralize": "^0.0.33",
     "fast-xml-parser": "^5.2.5",
     "pluralize": "^8.0.0",
