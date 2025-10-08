@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="6.3450608mm"
+   height="6.3444228mm"
+   viewBox="0 0 6.3450608 6.3444228"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="drawing.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.44631734"
+     inkscape:cx="-61.615352"
+     inkscape:cy="225.1761"
+     inkscape:window-width="1366"
+     inkscape:window-height="707"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-121.44436,-88.636011)">
+    <path
+       id="path1"
+       d="m 127.04414,91.808216 c 0,-1.340707 -1.08687,-2.42757 -2.42757,-2.42757 -1.34071,0 -2.42757,1.086863 -2.42757,2.42757 0,1.340707 1.08686,2.427571 2.42757,2.427571 1.3407,0 2.42757,-1.086864 2.42757,-2.427571"
+       style="fill:#000080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.000670528" />
+    <path
+       id="path2"
+       d="m 126.33312,90.802686 c 0,-0.392687 -0.31833,-0.71102 -0.71102,-0.71102 -0.39268,0 -0.71102,0.318333 -0.71102,0.71102 0,0.392681 0.31834,0.711014 0.71102,0.711014 0.39269,0 0.71102,-0.318333 0.71102,-0.711014"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.000670528" />
+    <text
+       id="text2"
+       xml:space="preserve"
+       x="122.79443"
+       y="93.021996"
+       style="font-size:0.0804632px;stroke-width:0.00670528"><tspan
+         id="tspan2"
+         style="font-variant:normal;font-weight:normal;font-size:2.18481px;font-family:Helvetica;writing-mode:lr-tb;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.00670528"
+         x="122.79443"
+         y="93.021996">Lua</tspan></text>
+    <path
+       id="path3"
+       d="m 127.41307,90.383326 c 0.22486,0.44132 0.34208,0.929593 0.34208,1.42489 0,1.733394 -1.40519,3.138588 -3.13858,3.138588 -1.7334,0 -3.13859,-1.405194 -3.13859,-3.138588 0,-1.733394 1.40519,-3.138585 3.13859,-3.138585 0.60676,0 1.20052,0.175879 1.70939,0.506343"
+       style="fill:none;stroke:#808080;stroke-width:0.0728274;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:0.273894;stroke-dashoffset:0;stroke-opacity:1" />
+  </g>
+</svg>
