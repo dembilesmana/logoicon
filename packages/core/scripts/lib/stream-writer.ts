@@ -16,7 +16,7 @@ export class StreamWriter {
    */
   async write(data: string | Buffer): Promise<void> {
     if (this.isClosed) {
-      throw new FileProcessingError('Cannot write to closed stream', 'stream');
+      throw new FileProcessingError("Cannot write to closed stream", "stream");
     }
 
     // Serialize writes to prevent race conditions
@@ -40,10 +40,12 @@ export class StreamWriter {
     return new Promise<void>((resolve, reject) => {
       this.stream.end((error?: Error) => {
         if (error) {
-          logger.error('Error closing stream', { error });
-          reject(new FileProcessingError('Failed to close stream', 'stream', error));
+          logger.error(error, "Error closing stream");
+          reject(
+            new FileProcessingError("Failed to close stream", "stream", error),
+          );
         } else {
-          logger.debug('Stream closed successfully');
+          logger.debug("Stream closed successfully");
           resolve();
         }
       });
@@ -55,23 +57,23 @@ export class StreamWriter {
    */
   private async writeChunk(chunk: string | Buffer): Promise<void> {
     if (this.isClosed) {
-      throw new FileProcessingError('Cannot write to closed stream', 'stream');
+      throw new FileProcessingError("Cannot write to closed stream", "stream");
     }
 
     try {
       const needsDrain = !this.stream.write(chunk);
 
       if (needsDrain) {
-        logger.debug('Stream backpressure detected, waiting for drain');
-        await once(this.stream, 'drain');
-        logger.debug('Stream drained, continuing writes');
+        logger.debug("Stream backpressure detected, waiting for drain");
+        await once(this.stream, "drain");
+        logger.debug("Stream drained, continuing writes");
       }
     } catch (error) {
-      logger.error('Error writing to stream', { error });
+      logger.error(error, "Error writing to stream");
       throw new FileProcessingError(
-        'Failed to write to stream',
-        'stream',
-        error as Error
+        "Failed to write to stream",
+        "stream",
+        error as Error,
       );
     }
   }
@@ -107,7 +109,7 @@ export class MetadataStreamWriter extends StreamWriter {
   private isFirstEntry = true;
 
   async writeMetadataObject(metadata: object): Promise<void> {
-    const prefix = this.isFirstEntry ? '  ' : '\n  ';
+    const prefix = this.isFirstEntry ? "  " : "\n  ";
     const json = JSON.stringify(metadata);
 
     await this.write(prefix);

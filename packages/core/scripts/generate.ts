@@ -9,7 +9,7 @@ import { createConcurrencyLimiter } from "./lib/concurrency-limiter";
 import { createFileGenerator } from "./lib/file-generator";
 import { IndexStreamWriter, MetadataStreamWriter } from "./lib/stream-writer";
 import { createSvgProcessor } from "./lib/svg-processor";
-import { AssetEntry } from "./types/generation.types";
+import type { AssetEntry } from "./types/generation.types";
 import { createAssetPaths } from "./utils/path-utils";
 
 // Re-export types for backward compatibility
@@ -150,18 +150,13 @@ async function processAllFiles(files: AssetEntry[]): Promise<void> {
       "File processing completed successfully",
     );
   } catch (error) {
-    logger.error({ error }, "File processing failed");
+    logger.error(error, "File processing failed");
 
     // Attempt to cleanup streams even if processing failed
     try {
       await fileGenerator.finalize();
     } catch (cleanupError) {
-      logger.error(
-        {
-          cleanupError,
-        },
-        "Failed to cleanup after processing error",
-      );
+      logger.error(cleanupError, "Failed to cleanup after processing error");
     }
 
     throw error;

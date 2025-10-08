@@ -23,7 +23,7 @@ export class SvgProcessor {
       this.svgoConfig = await loadConfig();
       logger.debug("SVGO configuration loaded successfully");
     } catch (error) {
-      logger.error("Failed to load SVGO configuration", { error });
+      logger.error(error, "Failed to load SVGO configuration");
       throw new FileProcessingError(
         "Failed to load SVGO configuration",
         "svgo.config.js",
@@ -44,7 +44,7 @@ export class SvgProcessor {
     }
 
     try {
-      logger.debug("Processing SVG file", { inputPath });
+      logger.debug({ inputPath }, "Processing SVG file");
 
       // Read the SVG file
       const xmlData = await readFileWithErrorHandling(inputPath);
@@ -55,20 +55,23 @@ export class SvgProcessor {
       // Parse the optimized SVG
       const parsedSvg = this.parseSvg(optimized.data);
 
-      logger.debug("SVG file processed successfully", {
-        inputPath,
-        originalSize: xmlData.length,
-        optimizedSize: optimized.data.length,
-        compressionRatio:
-          (
-            ((xmlData.length - optimized.data.length) / xmlData.length) *
-            100
-          ).toFixed(2) + "%",
-      });
+      logger.debug(
+        {
+          inputPath,
+          originalSize: xmlData.length,
+          optimizedSize: optimized.data.length,
+          compressionRatio:
+            (
+              ((xmlData.length - optimized.data.length) / xmlData.length) *
+              100
+            ).toFixed(2) + "%",
+        },
+        "SVG file processed successfully",
+      );
 
       return parsedSvg;
     } catch (error) {
-      logger.error("Failed to process SVG file", { inputPath, error });
+      logger.error({ inputPath, error }, "Failed to process SVG file");
 
       if (error instanceof FileProcessingError) {
         throw error;
@@ -95,7 +98,7 @@ export class SvgProcessor {
 
       return result;
     } catch (error) {
-      logger.error("SVGO optimization failed", { error });
+      logger.error(error, "SVGO optimization failed");
       throw new FileProcessingError(
         "Failed to optimize SVG with SVGO",
         "svg-content",
@@ -111,7 +114,7 @@ export class SvgProcessor {
     try {
       return this.xmlParser.parse(svgData);
     } catch (error) {
-      logger.error("XML parsing failed", { error });
+      logger.error(error, "XML parsing failed");
       throw new FileProcessingError(
         "Failed to parse optimized SVG",
         "svg-content",
