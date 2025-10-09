@@ -1,5 +1,11 @@
 # @logoicon/react
 
+## 1.0.4
+
+### Patch Changes
+
+- 2e2910e: add new logo and icon
+
 ## 1.0.3
 
 ### Patch Changes

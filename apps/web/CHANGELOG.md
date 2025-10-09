@@ -1,5 +1,14 @@
 # web
 
+## 1.0.4
+
+### Patch Changes
+
+- 2e2910e: add new logo and icon
+- Updated dependencies [2e2910e]
+  - @logoicon/react@1.0.4
+  - @logoicon/util@1.0.4
+
 ## 1.0.3
 
 ### Patch Changes

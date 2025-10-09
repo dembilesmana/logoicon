@@ -1,6 +1,6 @@
 {
   "name": "@logoicon/react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "react component of logoicon",
   "keywords": [
     "logo icon",
@@ -56,10 +56,10 @@
     "tsc": "tsc -p ./tsconfig.json"
   },
   "devDependencies": {
-    "@logoicon/core": "^1.0.3",
-    "@logoicon/eslintconfig": "^1.0.3",
-    "@logoicon/logger": "^1.0.3",
-    "@logoicon/tsconfig": "^1.0.3"
+    "@logoicon/core": "^1.0.4",
+    "@logoicon/eslintconfig": "^1.0.4",
+    "@logoicon/logger": "^1.0.4",
+    "@logoicon/tsconfig": "^1.0.4"
   },
   "publishConfig": {
     "access": "public"
