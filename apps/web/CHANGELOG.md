@@ -1,5 +1,14 @@
 # web
 
+## 1.0.5
+
+### Patch Changes
+
+- add new icon
+- Updated dependencies
+  - @logoicon/react@1.0.5
+  - @logoicon/util@1.0.5
+
 ## 1.0.4
 
 ### Patch Changes
