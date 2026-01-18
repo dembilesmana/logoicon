@@ -1,14 +1,14 @@
 "use client";
 
 import { useMounted } from "@/hooks/use-mounted";
-import { GithubIconDark, GithubIconLight } from "@logoicon/react";
-import { GlobeIcon, MailIcon } from "lucide-react";
+import { GithubIconDark, GithubIconLight, GmailIcon } from "@logoicon/react";
+import { cn } from "@logoicon/util";
+import { GlobeIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
+import Link, { LinkProps } from "next/link";
 import { AnchorHTMLAttributes, PropsWithChildren } from "react";
 import { Logo } from "./logo";
-import Link, { LinkProps } from "next/link";
-import { cn } from "@logoicon/util";
 
 function FooterLink(
   props: PropsWithChildren<LinkProps> & AnchorHTMLAttributes<HTMLAnchorElement>
@@ -124,7 +124,7 @@ export function Footer() {
                 href="mailto:dembilesmana@gmail.com"
                 aria-label="Email"
               >
-                <MailIcon className="size-6" />
+                <GmailIcon className="size-6" />
               </FooterLink>
             </div>
             <p className="text-sm text-stone-600 transition-colors duration-300 dark:text-stone-300">
