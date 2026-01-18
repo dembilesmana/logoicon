@@ -169,9 +169,9 @@ export function SearchAndFilter({
   return (
     <div className={cn("space-y-4", className)}>
       {/* Main Search and Controls */}
-      <div className="flex flex-col gap-4 sm:flex-row">
+      <div className="flex flex-col gap-4 md:flex-row">
         {/* Search Input */}
-        <Field className="relative flex items-center gap-2 border px-4 py-2 focus-within:outline-2 focus-within:outline-green-200">
+        <Field className="relative flex flex-1 items-center gap-2 border px-4 py-2 focus-within:outline-2 focus-within:outline-green-200">
           <Label>
             <SearchIcon className="size-4" />
           </Label>
