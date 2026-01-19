@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -16,12 +16,12 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
-    "@logoicon/react": "^1.0.5",
+    "@logoicon/react": "^1.0.6",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.13",
     "next": "15.4.10",
     "next-themes": "^0.4.6",
-    "@logoicon/util": "^1.0.5",
+    "@logoicon/util": "^1.0.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "sonner": "^2.0.7"

@@ -1,10 +1,12 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: [".dist/index.ts"],
+  entry: [".dist/**/*.{ts,tsx}"],
   outDir: "dist",
   format: ["esm", "cjs"],
   clean: true,
-  dts: true,
-  bundle: true,
+  bundle: false,
+  dts: {
+    entry: [".dist/index.ts"],
+  },
 });

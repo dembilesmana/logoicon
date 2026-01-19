@@ -1,5 +1,14 @@
 # web
 
+## 1.0.6
+
+### Patch Changes
+
+- 2bb4f2f: update tsup config
+- Updated dependencies [2bb4f2f]
+  - @logoicon/react@1.0.6
+  - @logoicon/util@1.0.6
+
 ## 1.0.5
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @logoicon/logger
 
+## 1.0.6
+
+### Patch Changes
+
+- 2bb4f2f: update tsup config
+
 ## 1.0.5
 
 ### Patch Changes
