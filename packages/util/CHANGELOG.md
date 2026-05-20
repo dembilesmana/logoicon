@@ -1,5 +1,11 @@
 # @logoicon/util
 
+## 1.0.7
+
+### Patch Changes
+
+- 17d4410: add iresume icon
+
 ## 1.0.6
 
 ### Patch Changes
