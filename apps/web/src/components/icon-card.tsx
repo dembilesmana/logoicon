@@ -1,13 +1,14 @@
 "use client";
 
 import { Button } from "@headlessui/react";
-import { cn } from "@logoicon/util";
+import { cn, kebabCase } from "@logoicon/util";
+import { CopyIcon, DownloadIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
+import { renderToString } from "react-dom/server";
 import { toast } from "sonner";
 import { ViewMode } from "./search-and-filter";
 import { Card } from "./ui/card";
-import { CopyIcon, DownloadIcon } from "lucide-react";
 
 interface IconCardProps {
   name: string;
@@ -28,15 +29,17 @@ export function IconCard({
   size = "md",
   // showActions = true,
   className,
-  viewMode = "grid"
+  viewMode = "grid",
 }: IconCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [, setIsCopied] = useState(false);
 
+  const svgString = renderToString(<Component />);
+
   const handleCopy = async () => {
     try {
-      const componentCode = `<${name.charAt(0).toUpperCase() + name.slice(1)} className="size-6" />`;
-      await navigator.clipboard.writeText(componentCode);
+      // const componentCode = `<${name.charAt(0).toUpperCase() + name.slice(1)} className="size-6" />`;
+      await navigator.clipboard.writeText(svgString);
       setIsCopied(true);
       toast.success("Component code copied to clipboard!");
 
@@ -48,7 +51,26 @@ export function IconCard({
 
   const handleDownload = () => {
     // This would typically generate and download the SVG
-    toast.success("Icon downloaded!");
+
+    // toast.success("Icon downloaded!");
+
+    try {
+      const blob = new Blob([svgString], {
+        type: "image/svg+xml;charset=utf-8",
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = kebabCase(name);
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Gahal: ", error);
+    }
   };
 
   const cleanName = name.replace(/([A-Z])/g, " $1").trim();
@@ -65,19 +87,19 @@ export function IconCard({
           initial={
             {
               grid: { opacity: 0 },
-              list: { opacity: 0 }
+              list: { opacity: 0 },
             }[viewMode]
           }
           animate={
             {
               grid: {
                 opacity: isHovered ? 1 : 0,
-                y: isHovered ? 0 : -10
+                y: isHovered ? 0 : -10,
               },
               list: {
                 opacity: isHovered ? 1 : 0,
-                x: isHovered ? 0 : 20
-              }
+                x: isHovered ? 0 : 20,
+              },
             }[viewMode]
           }
           transition={{ duration: 0.5 }}
@@ -88,8 +110,8 @@ export function IconCard({
               "flex items-center justify-between",
               {
                 grid: "size-full flex-row items-center",
-                list: "h-full flex-col items-start"
-              }[viewMode]
+                list: "h-full flex-col items-start",
+              }[viewMode],
             )}
           >
             <Button
@@ -114,19 +136,19 @@ export function IconCard({
         transition={{
           type: "spring",
           stiffness: 300,
-          damping: 10
+          damping: 10,
         }}
         animate={
           {
             grid: {
               scale: isHovered ? 1.1 : 1,
               y: isHovered ? "-3.5rem" : 0,
-              width: "100%"
+              width: "100%",
             },
             list: {
               x: isHovered ? "2.5rem" : "0rem",
-              width: isHovered ? "calc(100% - 2.5rem)" : "100%"
-            }
+              width: isHovered ? "calc(100% - 2.5rem)" : "100%",
+            },
           }[viewMode]
         }
         className={"group:hover:z-50 relative will-change-transform"}
@@ -134,13 +156,11 @@ export function IconCard({
         <Card
           className={cn(
             "relative p-0 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-green-500/20",
-            viewMode === "list" && "grid grid-cols-[8rem_1fr] flex-row"
+            viewMode === "list" && "grid grid-cols-[8rem_1fr] flex-row",
           )}
         >
           {/* INFO: Icon Display Area */}
-          <div
-            className={"relative flex flex-col items-center justify-center p-4"}
-          >
+          <div className={"relative flex flex-col items-center justify-center p-4"}>
             {/* Icon */}
             <motion.div
               className="flex items-center justify-center"
@@ -151,10 +171,10 @@ export function IconCard({
                 className={cn(
                   {
                     sm: "min-h-6 max-w-full",
-                    md: "min-h-12 max-w-full"
+                    md: "min-h-12 max-w-full",
                   }[size],
                   "transition-colors duration-200",
-                  "drop-shadow group-hover:text-green-600 dark:group-hover:text-green-400"
+                  "drop-shadow group-hover:text-green-600 dark:group-hover:text-green-400",
                 )}
               />
             </motion.div>
@@ -166,11 +186,7 @@ export function IconCard({
               <h3 className="max-w-full truncate text-gray-900 dark:text-gray-100">
                 <span className="truncate">{cleanName}</span>
               </h3>
-              {brand && (
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  {brand}
-                </p>
-              )}
+              {brand && <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{brand}</p>}
             </div>
           )}
         </Card>
