@@ -1,5 +1,11 @@
 # @logoicon/react
 
+## 1.0.8
+
+### Patch Changes
+
+- 52eb7bb: Fix copy and download button each LogoIcon web
+
 ## 1.0.7
 
 ### Patch Changes
