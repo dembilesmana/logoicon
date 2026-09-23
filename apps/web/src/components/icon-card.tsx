@@ -41,7 +41,7 @@ export function IconCard({
       // const componentCode = `<${name.charAt(0).toUpperCase() + name.slice(1)} className="size-6" />`;
       await navigator.clipboard.writeText(svgString);
       setIsCopied(true);
-      toast.success("Component code copied to clipboard!");
+      toast.success("SVG copied to clipboard!");
 
       setTimeout(() => setIsCopied(false), 2000);
     } catch {
@@ -160,7 +160,9 @@ export function IconCard({
           )}
         >
           {/* INFO: Icon Display Area */}
-          <div className={"relative flex flex-col items-center justify-center p-4"}>
+          <div
+            className={"relative flex flex-col items-center justify-center p-4"}
+          >
             {/* Icon */}
             <motion.div
               className="flex items-center justify-center"
@@ -186,7 +188,11 @@ export function IconCard({
               <h3 className="max-w-full truncate text-gray-900 dark:text-gray-100">
                 <span className="truncate">{cleanName}</span>
               </h3>
-              {brand && <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{brand}</p>}
+              {brand && (
+                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                  {brand}
+                </p>
+              )}
             </div>
           )}
         </Card>

@@ -1,6 +1,6 @@
 import { defineConfig } from "tsup";
 
-export default defineConfig((options) => ({
+export default defineConfig({
   entry: {
     index: "./src/index.ts",
     meta: "./build/metadata.ts",
@@ -12,4 +12,4 @@ export default defineConfig((options) => ({
   watch: true,
   // sourcemap: true
   // clean: true,
-}));
+});
