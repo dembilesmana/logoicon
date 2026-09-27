@@ -26,8 +26,8 @@ export function Header() {
         "border-hero-200 sticky top-0 z-50 w-full rounded-none",
         elevated && [
           "supports-[backdrop-filter]:bg-hero-100 supports-[backdrop-filter]:backdrop-blur-xs",
-          "dark:supports-[backdrop-filter]:bg-hero-700"
-        ]
+          "dark:supports-[backdrop-filter]:bg-hero-700",
+        ],
       )}
     >
       <div className="container mx-auto px-4 py-2 sm:px-6 lg:px-8">
@@ -37,7 +37,7 @@ export function Header() {
             whileHover={{
               scale: 1.05,
               rotate: 2,
-              transition: { type: "spring", stiffness: 300 }
+              transition: { type: "spring", stiffness: 300 },
             }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -46,6 +46,22 @@ export function Header() {
             <Link href="/">
               <Logo className="w-18" />
             </Link>
+          </motion.div>
+
+          <motion.div
+            className="flex items-center gap-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <nav>
+              <Link
+                href="/docs"
+                className="text-hero-700 hover:text-hero-900 dark:text-hero-300 dark:hover:text-hero-100 font-bold"
+              >
+                Docs
+              </Link>
+            </nav>
           </motion.div>
 
           {/* Actions */}
@@ -65,7 +81,7 @@ export function Header() {
               {mounted &&
                 {
                   light: <GithubIconLight className="size-6" />,
-                  dark: <GithubIconDark className="size-6" />
+                  dark: <GithubIconDark className="size-6" />,
                 }[resolvedTheme ?? "light"]}
             </Link>
 
