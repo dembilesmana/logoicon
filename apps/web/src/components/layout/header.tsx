@@ -56,7 +56,7 @@ export function Header() {
           >
             <nav>
               <Link
-                href="/docs"
+                href="https://dembilesmana.github.io/logoicon/"
                 className="text-hero-700 hover:text-hero-900 dark:text-hero-300 dark:hover:text-hero-100 font-bold"
               >
                 Docs
