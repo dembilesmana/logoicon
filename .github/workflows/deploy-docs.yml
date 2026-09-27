@@ -34,8 +34,6 @@ jobs:
 
       - name: Build docs with Turborepo
         run: npx turbo run build --filter=docs
-        env:
-          ASTRO_BASE: /${{ github.event.repository.name }}/docs
 
       - name: Prepare GitHub Pages artifact
         run: |
