@@ -4,10 +4,14 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  base: "/logoicon/docs",
+  base: "/docs",
   integrations: [
     starlight({
-      title: "LogoIcon",
+      title: "Docs",
+      components: {
+        // Timpa komponen judul/logo bawaan Starlight
+        SiteTitle: "./src/components/logo.astro",
+      },
       social: [
         {
           icon: "github",
@@ -18,7 +22,7 @@ export default defineConfig({
       sidebar: [
         {
           label: "Memulai",
-          items: [{ slug: "index" }, { slug: "general/welcome" }],
+          items: [{ slug: "index" }, { slug: "general/started" }],
         },
         { slug: "guides/basics" },
         {

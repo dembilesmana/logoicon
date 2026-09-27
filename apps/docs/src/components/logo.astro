@@ -1,0 +1,36 @@
+---
+// src/components/CustomLogo.astro
+import type { Props } from '@astrojs/starlight/props';
+
+// Anda bisa mengakses data bawaan Starlight via Astro.props jika dibutuhkan
+const { slug } = Astro.props;
+---
+
+<div class="custom-logo-wrapper">
+  <a href="http://logoicon.vercel.app" class="logo-link">
+    <img src="./public/logo.svg" alt="Logo" width="64" height="64" />
+  </a>
+  <a href="/docs" class="logo-link">
+    <span class="site-name">Docs</span>
+  </a>
+</div>
+
+<style>
+  .custom-logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--sl-color-text-accent);
+  }
+  .site-name {
+    font-size: 1.25rem;
+    color: var(--sl-color-white);
+  }
+</style>
