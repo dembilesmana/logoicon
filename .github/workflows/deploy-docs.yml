@@ -37,8 +37,8 @@ jobs:
 
       - name: Prepare GitHub Pages artifact
         run: |
-          mkdir -p site/docs
-          cp -R apps/docs/dist/. site/docs/
+          mkdir -p site
+          cp -R apps/docs/dist/. site/
           cp apps/docs/dist/index.html site/index.html
 
       - name: Upload GitHub Pages artifact
