@@ -1,5 +1,15 @@
 # web
 
+## 1.0.9
+
+### Patch Changes
+
+- e69d7a8: create @logoicon/config for global config
+- Updated dependencies [e69d7a8]
+  - @logoicon/config@0.0.1
+  - @logoicon/react@1.0.9
+  - @logoicon/util@1.0.9
+
 ## 1.0.8
 
 ### Patch Changes
