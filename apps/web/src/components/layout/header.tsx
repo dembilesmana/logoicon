@@ -3,6 +3,7 @@
 import { DarkMode } from "@/components/dark-mode";
 import { Logo } from "@/components/layout/logo";
 import { useMounted } from "@/hooks/use-mounted";
+import { config } from "@logoicon/config";
 import { GithubIconDark, GithubIconLight } from "@logoicon/react";
 import { cn } from "@logoicon/util";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
@@ -56,7 +57,7 @@ export function Header() {
           >
             <nav>
               <Link
-                href="https://dembilesmana.github.io/logoicon/"
+                href={config.url.docs}
                 className="text-hero-700 hover:text-hero-900 dark:text-hero-300 dark:hover:text-hero-100 font-bold"
               >
                 Docs

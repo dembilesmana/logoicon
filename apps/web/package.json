@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
+    "@logoicon/config": "0.0.0",
     "@logoicon/react": "^1.0.8",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.13",

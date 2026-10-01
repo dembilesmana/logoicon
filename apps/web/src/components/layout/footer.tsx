@@ -1,6 +1,7 @@
 "use client";
 
 import { useMounted } from "@/hooks/use-mounted";
+import { config } from "@logoicon/config";
 import { GithubIconDark, GithubIconLight, GmailIcon } from "@logoicon/react";
 import { cn } from "@logoicon/util";
 import { GlobeIcon } from "lucide-react";
@@ -11,7 +12,7 @@ import { AnchorHTMLAttributes, PropsWithChildren } from "react";
 import { Logo } from "./logo";
 
 function FooterLink(
-  props: PropsWithChildren<LinkProps> & AnchorHTMLAttributes<HTMLAnchorElement>
+  props: PropsWithChildren<LinkProps> & AnchorHTMLAttributes<HTMLAnchorElement>,
 ) {
   const { children, className, ...z } = props;
 
@@ -20,7 +21,7 @@ function FooterLink(
       {...z}
       className={cn(
         className,
-        "text-stone-600 transition-colors hover:text-green-600 dark:text-stone-400 dark:hover:text-green-400"
+        "text-stone-600 transition-colors hover:text-green-600 dark:text-stone-400 dark:hover:text-green-400",
       )}
     >
       {children}
@@ -61,7 +62,8 @@ export function Footer() {
             <ul className="space-y-2">
               <li>
                 <FooterLink
-                  href="https://github.com/dembilesmana/logoicon"
+                  href={config.url.docs}
+                  target="_blank"
                   className="text-sm text-stone-600 transition-colors hover:text-green-600 dark:text-stone-400 dark:hover:text-green-400"
                 >
                   Documentation
@@ -69,15 +71,8 @@ export function Footer() {
               </li>
               <li>
                 <FooterLink
-                  href="https://github.com/dembilesmana/logoicon/blob/main/README.md"
-                  className="text-sm text-stone-600 transition-colors hover:text-green-600 dark:text-stone-400 dark:hover:text-green-400"
-                >
-                  Getting Started
-                </FooterLink>
-              </li>
-              <li>
-                <FooterLink
                   href="https://www.npmjs.com/package/@logoicon/react"
+                  target="_blank"
                   className="text-sm text-stone-600 transition-colors hover:text-green-600 dark:text-stone-400 dark:hover:text-green-400"
                 >
                   NPM Package
@@ -86,6 +81,7 @@ export function Footer() {
               <li>
                 <FooterLink
                   href="https://github.com/dembilesmana/logoicon/issues"
+                  target="_blank"
                   className="text-sm text-stone-600 transition-colors hover:text-green-600 dark:text-stone-400 dark:hover:text-green-400"
                 >
                   Report Issues
@@ -109,7 +105,7 @@ export function Footer() {
                 {mounted &&
                   {
                     light: <GithubIconLight className="size-6" />,
-                    dark: <GithubIconDark className="size-6" />
+                    dark: <GithubIconDark className="size-6" />,
                   }[resolvedTheme ?? "light"]}
               </FooterLink>
               <FooterLink
@@ -144,8 +140,11 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-8 flex flex-col items-center justify-center rounded-none border-t border-stone-300 pt-6 md:flex-row dark:border-stone-700">
           <p className="text-center text-sm text-stone-600 transition-colors duration-300 dark:text-stone-400">
-            © {new Date().getFullYear()} logoicon. Open source under MIT
-            License.
+            © {new Date().getFullYear()}{" "}
+            <Link target="_blank" href="/">
+              logocion.
+            </Link>{" "}
+            Open source under MIT License.
           </p>
           {/* <div className="mt-4 flex space-x-6 text-sm md:mt-0"> */}
           {/*   <FooterLink */}
