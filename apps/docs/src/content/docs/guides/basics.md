@@ -22,14 +22,14 @@ Gunakan opsi **Copy** jika ingin menempelkan SVG langsung ke markup HTML:
 ```html
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  id="2f7ccd17__svg1"
+  id="95b7ca0e__svg1"
   version="1.1"
   viewBox="0 0 24 21.724138"
 >
-  <defs id="a213fb57__defs1"></defs>
-  <title id="39c1f93f__title1">HTML5 CSS Styling Logo</title>
+  <defs id="9df94fad__defs1"></defs>
+  <title id="1df15d17__title1">HTML5 CSS Styling Logo</title>
   <path
-    id="1e32c004__path1"
+    id="6edfa681__path1"
     stroke-width="0.108893"
     d="M 3.5716878,0 2.7658802,4.0290381 H 19.165154 L 18.653358,6.6315789 H 2.2431942 L 1.4482759,10.660617 H 17.84755 l -0.914701,4.595281 -6.6098,2.188748 -5.7277677,-2.188748 0.3920145,-1.99274 H 0.95825771 L 0,18.098004 9.4736842,21.724138 20.395644,18.098004 21.84392,10.823956 22.137931,9.3647913 24,0 Z"
   ></path>
