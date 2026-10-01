@@ -1,5 +1,11 @@
 # @logoicon/util
 
+## 1.0.9
+
+### Patch Changes
+
+- e69d7a8: create @logoicon/config for global config
+
 ## 1.0.8
 
 ### Patch Changes
