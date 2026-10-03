@@ -2,14 +2,18 @@
 
 import { useMounted } from "@/hooks/use-mounted";
 import { config } from "@logoicon/config";
-import { GithubIconDark, GithubIconLight, GmailIcon } from "@logoicon/react";
+import {
+  GithubIconDark,
+  GithubIconLight,
+  GmailIcon,
+  LogoiconLogo,
+} from "@logoicon/react";
 import { cn } from "@logoicon/util";
 import { GlobeIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import Link, { LinkProps } from "next/link";
 import { AnchorHTMLAttributes, PropsWithChildren } from "react";
-import { Logo } from "./logo";
 
 function FooterLink(
   props: PropsWithChildren<LinkProps> & AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -45,7 +49,7 @@ export function Footer() {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Logo className="w-24" />
+              <LogoiconLogo className="w-24" />
             </div>
             <p className="max-w-xs text-sm text-stone-600 transition-colors duration-300 dark:text-stone-300">
               A comprehensive React component library for beautiful brand logos

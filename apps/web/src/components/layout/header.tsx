@@ -1,10 +1,9 @@
 "use client";
 
 import { DarkMode } from "@/components/dark-mode";
-import { Logo } from "@/components/layout/logo";
 import { useMounted } from "@/hooks/use-mounted";
 import { config } from "@logoicon/config";
-import { GithubIconDark, GithubIconLight } from "@logoicon/react";
+import { GithubIconDark, GithubIconLight, LogoiconLogo } from "@logoicon/react";
 import { cn } from "@logoicon/util";
 import { motion, useMotionValueEvent, useScroll } from "motion/react";
 import { useTheme } from "next-themes";
@@ -45,7 +44,7 @@ export function Header() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <Link href="/">
-              <Logo className="w-18" />
+              <LogoiconLogo />
             </Link>
           </motion.div>
 
