@@ -3,7 +3,9 @@ title: Basic
 description: Salin atau unduh ikon LogoIcon lalu gunakan langsung tanpa package tambahan.
 ---
 
-LogoIcon dapat digunakan tanpa library atau framework. Pilih ikon di situs [LogoIcon](https://logoicon.vercel.app), lalu gunakan tombol **Copy** untuk menyalin SVG atau **Download** untuk mengunduh file SVG.
+import { config } from "@logoicon/config";
+
+LogoIcon dapat digunakan tanpa library atau framework. Pilih ikon di situs <a href={config.url.web} target="_blank" rel="noopener noreferrer">LogoIcon</a>, lalu gunakan tombol **Copy** untuk menyalin SVG atau **Download** untuk mengunduh file SVG.
 
 ## Menggunakan file SVG
 
@@ -71,4 +73,4 @@ Warna inline SVG bergantung pada atribut `fill` atau `stroke` yang ada pada SVG 
 
 ## Kapan menggunakan library?
 
-Gunakan SVG langsung jika Anda hanya membutuhkan asset ikon dan tidak ingin menambahkan dependency. Jika project Anda menggunakan React dan membutuhkan komponen yang dapat menerima props SVG, lihat [panduan penggunaan LogoIcon di React](/guides/react/usage) dan [panduan instalasi library React](/guides/react/installation).
+Gunakan SVG langsung jika Anda hanya membutuhkan asset ikon dan tidak ingin menambahkan dependency. Jika project Anda menggunakan React dan membutuhkan komponen yang dapat menerima props SVG, lihat [panduan penggunaan LogoIcon di React](guides/react/usage) dan [panduan instalasi library React](guides/react/installation).

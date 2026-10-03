@@ -5,7 +5,8 @@ import { defineConfig } from "astro/config";
 // https://astro.build/config
 export default defineConfig({
   site: "https://dembilesmana.github.io",
-  base: process.env.NODE_ENV === "development" ? undefined : "/logoicon/",
+  base: "/logoicon/",
+  // base: process.env.NODE_ENV === "development" ? undefined : "/logoicon/",
   integrations: [
     starlight({
       title: "Docs",
@@ -20,6 +21,7 @@ export default defineConfig({
           href: "https://github.com/dembilesmana/logoicon",
         },
       ],
+      head: [{ tag: "base", attrs: { href: "/logoicon/" } }],
       sidebar: [
         {
           label: "Memulai",

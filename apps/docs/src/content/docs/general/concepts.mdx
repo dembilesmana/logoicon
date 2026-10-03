@@ -3,23 +3,30 @@ title: Arsitektur aset dan generator
 description: Alur internal aset SVG dan pembuatan package LogoIcon.
 ---
 
-Dokumen ini menjelaskan alur internal repository dan ditujukan untuk kontributor. Untuk menggunakan ikon di aplikasi, pilih [panduan SVG](/guides/basics) atau [panduan React](/guides/react/installation).
+Dokumen ini menjelaskan alur internal repository dan ditujukan untuk kontributor. Untuk menggunakan
+ikon di aplikasi, pilih [panduan SVG](guides/basics) atau
+[panduan React](guides/react/installation).
 
 ## Aset sumber
 
-File SVG sumber berada di `packages/core/assets`. Generator Core memproses file tersebut dan menulis hasil terstruktur ke `packages/core/.assets`. Metadata ikon disimpan dalam format NDJSON untuk pemrosesan streaming.
+File SVG sumber berada di `packages/core/assets`. Generator Core memproses file tersebut dan menulis
+hasil terstruktur ke `packages/core/.assets`. Metadata ikon disimpan dalam format NDJSON untuk
+pemrosesan streaming.
 
 ## Package yang dihasilkan
 
-Generator React membaca aset Core, mengubah struktur SVG menjadi JSX, lalu menghasilkan komponen ikon beserta ekspor dan metadata package. Untuk menambahkan aset baru, ikuti [panduan kontribusi aset](/guides/add-assets).
+Generator React membaca aset Core, mengubah struktur SVG menjadi JSX, lalu menghasilkan komponen
+ikon beserta ekspor dan metadata package. Untuk menambahkan aset baru, ikuti
+[panduan kontribusi aset](guides/add-assets).
 
 ## Penamaan ikon
 
 Nama komponen dibentuk dalam PascalCase dari metadata ikon. Contohnya:
 
-| Nama aset | Export komponen |
-| --- | --- |
-| `github-icon-dark` | `GithubIconDark` |
+| Nama aset           | Export komponen   |
+| ------------------- | ----------------- |
+| `github-icon-dark`  | `GithubIconDark`  |
 | `github-icon-light` | `GithubIconLight` |
 
-Untuk cara mengonsumsi metadata dalam aplikasi, lihat [panduan metadata](/guides/metadata). Untuk struktur dan lokasi package, lihat [peta repository](/reference/repository).
+Untuk cara mengonsumsi metadata dalam aplikasi, lihat [panduan metadata](guides/metadata). Untuk
+struktur dan lokasi package, lihat [peta repository](reference/repository).

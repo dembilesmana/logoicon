@@ -3,6 +3,11 @@
  * @type {import("prettier").Config}
  */
 const config = {
+  overrides: [
+    {
+      files: ["*.md", "*.mdx"],
+    },
+  ],
   plugins: ["prettier-plugin-packagejson"],
 };
 

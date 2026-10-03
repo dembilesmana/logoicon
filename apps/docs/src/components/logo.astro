@@ -2,8 +2,8 @@
 // src/components/CustomLogo.astro
 import type { Props } from '@astrojs/starlight/props';
 import { config } from '@logoicon/config';
-import {Image} from "astro:assets"
-import logo from "../assets/logo.svg"
+import { Image } from "astro:assets";
+import logo from "../assets/logo.svg";
 
 // Anda bisa mengakses data bawaan Starlight via Astro.props jika dibutuhkan
 const { slug } = Astro.props;
@@ -14,7 +14,7 @@ const { slug } = Astro.props;
   class="logo-link">
     <Image src={ logo } alt="Logo" width="64" height="64"/>
   </a>
-  <a href="/" class="logo-link">
+  <a href="" class="logo-link">
     <span class="site-name">Docs</span>
   </a>
 </div>
