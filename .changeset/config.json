@@ -5,7 +5,7 @@
     { "repo": "dembilesmana/logoicon" }
   ],
   "commit": false,
-  "fixed": [["apps/*", "packages/*"]],
+  "fixed": [["web", "docs", "@logoicon/**"]],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
