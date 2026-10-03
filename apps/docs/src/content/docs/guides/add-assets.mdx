@@ -3,9 +3,38 @@ title: Menambah aset ikon
 description: Alur kontribusi untuk menambahkan file SVG baru ke LogoIcon.
 ---
 
+import { Aside, Card } from "@astrojs/starlight/components";
+
 ## 1. Tambahkan SVG
 
-Letakkan SVG baru di direktori kategori yang sesuai di `packages/core/assets`. Ikuti pola nama aset yang sudah ada, termasuk informasi brand, nama, warna, mode, dan kategori jika bagian tersebut digunakan oleh koleksi terkait.
+Letakkan SVG baru di direktori brand yang sesuai di `packages/core/assets`. Gunakan `icon` untuk simbol atau mark tanpa wordmark, dan `logo` untuk logo lengkap yang menyertakan wordmark atau lockup resmi.
+
+{/* Nama file mengikuti format `[logo|icon]-[mono]-[light|dark].svg`: */}
+{/* Nama file mengikuti format regex `/^(logo|icon)(-mono-(light|dark)|-(light|dark))?\.svg$/`: */}
+
+<Card title="Konvens penamaan aset">
+
+<Aside type="tip">
+
+| Varian          | Pola nama                             | Contoh                                          |
+| --------------- | ------------------------------------- | ----------------------------------------------- |
+| Berwarna        | `[logo\|icon].svg`                    | `logo.svg`,<br/>`icon.svg`                      |
+| Berwarna mode   | `[logo\|icon]-[light\|dark].svg`      | `logo-dark.svg`,<br/>`icon-light.svg`           |
+| Monochrome mode | `[logo\|icon]-mono-[light\|dark].svg` | `logo-mono-dark.svg`,<br/>`icon-mono-light.svg` |
+
+</ Aside>
+
+<Aside type="danger">
+
+| Varian     | Pola nama               | Contoh                               |
+| ---------- | ----------------------- | ------------------------------------ |
+| Monochrome | `[logo\|icon]-mono.svg` | `logo-mono.svg`,<br/>`icon-mono.svg` |
+
+</Aside>
+
+</Card>
+
+Jangan gunakan suffix `-mono` untuk aset berwarna. Jika aset monochrome memiliki versi untuk latar terang dan gelap, beri suffix `-light` dan `-dark` agar kedua varian dapat dibedakan. Suffix tersebut harus berada setelah `-mono`.
 
 ## 2. Jalankan generator Core
 

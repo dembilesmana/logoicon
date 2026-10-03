@@ -3,19 +3,23 @@ title: Struktur repository
 description: Peta singkat monorepo LogoIcon.
 ---
 
-```text
-apps/
-  docs/           Situs dokumentasi Astro + Starlight
-  web/            Katalog dan pencarian ikon Next.js
-packages/
-  core/           Aset SVG dan generator aset
-  react/          Generator serta paket komponen React
-  util/           Utilitas nama dan className
-  logger/         Logger lintas paket
-  config/         Konfigurasi aplikasi umum bersama
-  eslintconfig/   Konfigurasi ESLint bersama
-  tsconfig/       Konfigurasi TypeScript bersama
-```
+import { FileTree } from "@astrojs/starlight/components";
+
+<FileTree>
+
+- apps/
+  - docs/ Situs dokumentasi Astro + Starlight
+  - web/ Katalog dan pencarian ikon Next.js
+- packages/
+  - core/ Aset SVG dan generator aset
+  - react/ Generator serta paket komponen React
+  - util/ Utilitas nama dan className
+  - logger/ Logger lintas paket
+  - config/ Konfigurasi aplikasi umum bersama
+  - eslintconfig/ Konfigurasi ESLint bersama
+  - tsconfig/ Konfigurasi TypeScript bersama
+
+</FileTree>
 
 ## Batas tanggung jawab
 
