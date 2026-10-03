@@ -1,8 +1,11 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
-  "changelog": ["@changesets/cli/changelog", {"repo": "dembilesmana/logoicon"}],
+  "changelog": [
+    "@changesets/cli/changelog",
+    { "repo": "dembilesmana/logoicon" }
+  ],
   "commit": false,
-  "fixed": [],
+  "fixed": [["apps/*", "packages/*"]],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
@@ -12,8 +15,5 @@
     "version": true,
     "tag": false
   },
-  "packages": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packages": ["apps/*", "packages/*"]
 }

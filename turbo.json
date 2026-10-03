@@ -21,6 +21,7 @@
     },
     "@logoicon/react#generate": {
       "dependsOn": ["^generate"],
+      "outputs": [".dist/**"],
       "inputs": ["$TURBO_DEFAULT$"]
     },
     "web#build": {
