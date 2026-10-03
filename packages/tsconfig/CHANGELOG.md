@@ -1,5 +1,11 @@
 # @logoicon/tsconfig
 
+## 1.0.10
+
+### Patch Changes
+
+- 8da0068: fixed minor
+
 ## 1.0.9
 
 ### Patch Changes
