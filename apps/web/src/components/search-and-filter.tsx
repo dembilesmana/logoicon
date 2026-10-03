@@ -9,7 +9,7 @@ import {
   Listbox,
   ListboxButton,
   ListboxOption,
-  ListboxOptions
+  ListboxOptions,
 } from "@headlessui/react";
 import { cn } from "@logoicon/util";
 import {
@@ -21,7 +21,7 @@ import {
   LayoutListIcon,
   SearchIcon,
   TagIcon,
-  XIcon
+  XIcon,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -31,7 +31,7 @@ import {
   SVGProps,
   useCallback,
   useMemo,
-  useState
+  useState,
 } from "react";
 import { Card, CardContent } from "./ui/card";
 
@@ -64,23 +64,23 @@ export const sortOptions: SortOption[] = [
   {
     value: "asc",
     label: "Name A-Z",
-    icon: ArrowDownAzIcon
+    icon: ArrowDownAzIcon,
   },
   {
     value: "desc",
     label: "Name Z-A",
-    icon: ArrowUpAZIcon
+    icon: ArrowUpAZIcon,
   },
   {
     value: "category",
     label: "Category",
-    icon: TagIcon
+    icon: TagIcon,
   },
   {
     value: "brand",
     label: "Brand",
-    icon: BoxIcon
-  }
+    icon: BoxIcon,
+  },
 ];
 
 export function SearchAndFilter({
@@ -93,7 +93,7 @@ export function SearchAndFilter({
   brands,
   totalItems,
   filteredItems,
-  className
+  className,
 }: SearchAndFilterProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -107,7 +107,7 @@ export function SearchAndFilter({
       setSearchQuery(value);
       onSearch(value);
     },
-    [onSearch]
+    [onSearch],
   );
 
   const handleCategoryToggle = useCallback(
@@ -119,7 +119,7 @@ export function SearchAndFilter({
       setSelectedCategories(newCategories);
       onCategoryFilter(newCategories);
     },
-    [selectedCategories, onCategoryFilter]
+    [selectedCategories, onCategoryFilter],
   );
 
   const handleBrandToggle = useCallback(
@@ -131,7 +131,7 @@ export function SearchAndFilter({
       setSelectedBrands(newBrands);
       onBrandFilter(newBrands);
     },
-    [selectedBrands, onBrandFilter]
+    [selectedBrands, onBrandFilter],
   );
 
   const handleSortChange = useCallback(
@@ -139,7 +139,7 @@ export function SearchAndFilter({
       setCurrentSort(sort);
       onSortChange(sort);
     },
-    [onSortChange]
+    [onSortChange],
   );
 
   const handleViewChange = useCallback(
@@ -147,7 +147,7 @@ export function SearchAndFilter({
       setCurrentView(view);
       onViewChange(view);
     },
-    [onViewChange]
+    [onViewChange],
   );
 
   const clearAllFilters = useCallback(() => {
@@ -176,7 +176,7 @@ export function SearchAndFilter({
             <SearchIcon className="size-4" />
           </Label>
           <Input
-            className="pr-6"
+            className="w-full pr-6"
             type="text"
             placeholder="Search icons..."
             value={searchQuery}
@@ -198,8 +198,8 @@ export function SearchAndFilter({
         <Button
           onClick={() => setShowFilters(!showFilters)}
           className={cn(
-            "flex items-center gap-2 border px-4 py-2 focus:outline-2 focus:outline-green-200",
-            showFilters && "bg-green-200"
+            "flex cursor-pointer items-center gap-2 border px-4 py-2 focus:outline-2 focus:outline-green-200",
+            showFilters && "bg-green-200",
           )}
         >
           <FunnelIcon className="size-4" />
@@ -213,8 +213,8 @@ export function SearchAndFilter({
               <>
                 <ListboxButton
                   className={cn(
-                    "flex items-center gap-2 border p-2 whitespace-nowrap focus:outline-2 focus:outline-green-200",
-                    open && "bg-green-200 outline-2 outline-green-200"
+                    "flex cursor-pointer items-center gap-2 border p-2 whitespace-nowrap focus:outline-2 focus:outline-green-200",
+                    open && "bg-green-200 outline-2 outline-green-200",
                   )}
                 >
                   {currentSort.label}
@@ -233,9 +233,9 @@ export function SearchAndFilter({
                       {({ focus, selected }) => (
                         <div
                           className={cn(
-                            "flex items-center justify-between gap-2 rounded-sm px-4 py-2",
+                            "flex cursor-pointer items-center justify-between gap-2 rounded-sm px-4 py-2",
                             focus && "bg-hero-100",
-                            selected && "bg-hero-200"
+                            selected && "bg-hero-200",
                           )}
                         >
                           {options.label}
@@ -255,7 +255,7 @@ export function SearchAndFilter({
               onClick={() => handleViewChange("grid")}
               className={cn(
                 currentView === "grid" && "bg-green-200 text-green-50",
-                "group-focus:bg-hero-200 rounded-none p-2 focus:bg-green-100 focus:outline-none"
+                "group-focus:bg-hero-200 cursor-pointer rounded-none p-2 focus:bg-green-100 focus:outline-none",
               )}
             >
               <LayoutGridIcon />
@@ -264,7 +264,7 @@ export function SearchAndFilter({
               onClick={() => handleViewChange("list")}
               className={cn(
                 currentView === "list" && "bg-green-200 stroke-white",
-                "group-focus:bg-hero-200 rounded-none p-2 focus:bg-green-100 focus:outline-none"
+                "group-focus:bg-hero-200 cursor-pointer rounded-none p-2 focus:bg-green-100 focus:outline-none",
               )}
             >
               <LayoutListIcon />

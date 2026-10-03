@@ -24,7 +24,7 @@ const iconData: IconData[] = iconMeta
       name: m.title,
       Component: Comp,
       category: m.category,
-      brand: m.brand
+      brand: m.brand,
     } as IconData;
   })
   .filter(Boolean) as IconData[];
@@ -43,7 +43,7 @@ export default function Home() {
     handleCategoryFilter,
     handleBrandFilter,
     handleSortChange,
-    resetFilters
+    resetFilters,
   } = useIconFilter(iconData);
 
   const handleViewChange = (view: ViewMode) => {
@@ -172,8 +172,8 @@ export default function Home() {
                 "grid gap-4 transition-all duration-300",
                 {
                   grid: "grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10",
-                  list: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                }[viewMode]
+                  list: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+                }[viewMode],
               )}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -189,7 +189,7 @@ export default function Home() {
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{
                       duration: 0.3,
-                      delay: Math.min(index * 0.02, 0.5)
+                      delay: Math.min(index * 0.02, 0.5),
                     }}
                   >
                     <IconCard
