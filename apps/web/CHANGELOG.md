@@ -1,5 +1,15 @@
 # web
 
+## 1.0.10
+
+### Patch Changes
+
+- 8da0068: fixed minor
+- Updated dependencies [8da0068]
+  - @logoicon/config@1.0.10
+  - @logoicon/react@1.0.10
+  - @logoicon/util@1.0.10
+
 ## 1.0.9
 
 ### Patch Changes

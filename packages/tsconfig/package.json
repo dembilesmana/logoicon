@@ -1,6 +1,6 @@
 {
   "name": "@logoicon/tsconfig",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "private": true,
   "description": "tsconfig of logoicon",
   "license": "MIT",
