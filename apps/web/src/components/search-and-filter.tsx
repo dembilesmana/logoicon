@@ -274,7 +274,7 @@ export function SearchAndFilter({
       </div>
 
       {/* Results Count */}
-      <div className="flex items-center justify-between">
+      {/* <div className="flex items-center justify-between">
         <span>
           Showing {filteredItems.toLocaleString()} of{" "}
           {totalItems.toLocaleString()} icons
@@ -287,7 +287,7 @@ export function SearchAndFilter({
             Clear all filters
           </Button>
         )}
-      </div>
+      </div> */}
 
       {/* Expanded Filters */}
       <AnimatePresence>

@@ -25,8 +25,13 @@ export function Header() {
       className={cn(
         "border-hero-200 sticky top-0 z-50 w-full rounded-none",
         elevated && [
-          "supports-[backdrop-filter]:bg-hero-100 supports-[backdrop-filter]:backdrop-blur-xs",
-          "dark:supports-[backdrop-filter]:bg-hero-700",
+          "bg-hero-100",
+          "dark:bg-hero-700",
+          "backdrop-blur-xs",
+          "supports-[backdrop-filter]:backdrop-blur-xs",
+          "supports-[backdrop-filter]:bg-hero-100/60",
+          "dark:supports-[backdrop-filter]:bg-hero-700/95",
+          "dark:shadow-hero-900 shadow-hero-50 border-b-1 shadow-lg",
         ],
       )}
     >
@@ -44,7 +49,7 @@ export function Header() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <Link href="/">
-              <LogoiconLogo />
+              <LogoiconLogo className="w-16" />
             </Link>
           </motion.div>
 

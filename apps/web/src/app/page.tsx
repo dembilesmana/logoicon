@@ -9,9 +9,11 @@ import { Button } from "@headlessui/react";
 import * as logoicon from "@logoicon/react";
 import { metadata as iconMeta } from "@logoicon/react";
 import { cn, pascalCase } from "@logoicon/util";
-import { ArrowRightIcon, BlocksIcon, Palette, Zap } from "lucide-react";
+import { BlocksIcon, Palette, Zap } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { ComponentType, useState } from "react";
+
+const PAGE_SIZE = 20;
 
 const iconData: IconData[] = iconMeta
   .map((m) => {
@@ -31,6 +33,7 @@ const iconData: IconData[] = iconMeta
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const {
     filteredIcons,
@@ -45,6 +48,39 @@ export default function Home() {
     handleSortChange,
     resetFilters,
   } = useIconFilter(iconData);
+
+  const visibleIcons = filteredIcons.slice(0, visibleCount);
+
+  const handleSearchWithReset = (...args: Parameters<typeof handleSearch>) => {
+    setVisibleCount(PAGE_SIZE);
+    handleSearch(...args);
+  };
+
+  const handleCategoryFilterWithReset = (
+    ...args: Parameters<typeof handleCategoryFilter>
+  ) => {
+    setVisibleCount(PAGE_SIZE);
+    handleCategoryFilter(...args);
+  };
+
+  const handleBrandFilterWithReset = (
+    ...args: Parameters<typeof handleBrandFilter>
+  ) => {
+    setVisibleCount(PAGE_SIZE);
+    handleBrandFilter(...args);
+  };
+
+  const handleSortChangeWithReset = (
+    ...args: Parameters<typeof handleSortChange>
+  ) => {
+    setVisibleCount(PAGE_SIZE);
+    handleSortChange(...args);
+  };
+
+  const resetFiltersWithPagination = () => {
+    setVisibleCount(PAGE_SIZE);
+    resetFilters();
+  };
 
   const handleViewChange = (view: ViewMode) => {
     setViewMode(view);
@@ -67,9 +103,9 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Beautiful Icons for
+          Brands Around the World.
           <br />
-          Modern Projects
+          All in One Library.
         </motion.h1>
 
         <motion.p
@@ -78,8 +114,8 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          Discover, search, and download high-quality SVG icons from top brands.
-          Perfect for web, mobile, and desktop applications.
+          Discover and use brand logos from across the globe, all gathered in
+          one library. Find the right logo for any project in seconds.
         </motion.p>
 
         {/* Feature Pills */}
@@ -113,10 +149,10 @@ export default function Home() {
         <Card>
           <CardContent>
             <SearchAndFilter
-              onSearch={handleSearch}
-              onCategoryFilter={handleCategoryFilter}
-              onBrandFilter={handleBrandFilter}
-              onSortChange={handleSortChange}
+              onSearch={handleSearchWithReset}
+              onCategoryFilter={handleCategoryFilterWithReset}
+              onBrandFilter={handleBrandFilterWithReset}
+              onSortChange={handleSortChangeWithReset}
               onViewChange={handleViewChange}
               categories={categories}
               brands={brands}
@@ -157,7 +193,7 @@ export default function Home() {
                   </p>
                   <Button
                     className="cursor-pointer focus:outline-none"
-                    onClick={resetFilters}
+                    onClick={resetFiltersWithPagination}
                   >
                     Clear all filters
                   </Button>
@@ -180,7 +216,7 @@ export default function Home() {
               exit={{ opacity: 0 }}
             >
               <AnimatePresence mode="popLayout">
-                {filteredIcons.map((icon, index) => (
+                {visibleIcons.map((icon, index) => (
                   <motion.div
                     key={icon.name}
                     layout
@@ -210,16 +246,26 @@ export default function Home() {
       </motion.section>
 
       {/* Load More Button (if needed) */}
-      {filteredCount > 100 && (
+      {visibleCount < filteredIcons.length && (
         <motion.div
           className="container mx-auto flex w-full justify-center py-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          <Button className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-blue-600 p-2 hover:from-green-700 hover:to-blue-700">
-            Load More Icons
-            <ArrowRightIcon className="size-4" />
+          <Button
+            className={cn(
+              "flex items-center justify-center gap-2",
+              "border p-2",
+              "bg-hero-50",
+            )}
+            onClick={() =>
+              setVisibleCount((count) =>
+                Math.min(count + PAGE_SIZE, filteredIcons.length),
+              )
+            }
+          >
+            Load More
           </Button>
         </motion.div>
       )}
