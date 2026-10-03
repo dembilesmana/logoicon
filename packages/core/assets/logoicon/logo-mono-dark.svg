@@ -8,7 +8,7 @@
    version="1.1"
    id="svg1"
    inkscape:version="1.4.4 (dcaf3e7d9e, 2026-05-05)"
-   sodipodi:docname="logo.svg"
+   sodipodi:docname="logo-mono-dark.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@
      id="defs1" />
   <path
      id="rect14"
-     style="display:inline;fill:#016630;stroke-width:0.159543;fill-opacity:1"
+     style="display:inline;fill:#ffffff;stroke-width:0.159543"
      d="M 0.99993896,0 V 3.9997559 H 5.0002116 v 1.0004557 h 0.999939 V 0.99993896 0 Z M 10.999845,0 v 3.9997559 1.0004557 h 0.999939 V 3.9997559 2.9998169 1.9998779 0.99993896 0 Z m 6.000151,0 V 0.99993896 H 13.00024 V 1.9998779 h 3.999756 v 1.999878 1.0004557 h 0.999939 V 0.99993896 0 Z M 7.0000895,0.99993896 V 3.9997559 H 9.9999064 V 0.99993896 Z m 11.9997845,0 V 3.9997559 h 3.000334 V 0.99993896 Z M 13.00024,2.9998169 v 0.999939 h 2.999817 V 2.9998169 Z M 5.0002116,6.0001506 V 7.0000895 H 2.9998169 v 2.9998169 h 2.0003947 v 0.9999386 h 0.999939 V 9.9999064 7.0000895 6.0001506 Z m 5.9996334,0 V 7.0000895 H 7.0000895 v 2.9998169 h 3.9997555 v 0.9999386 h 0.999939 V 7.0000895 6.0001506 Z m 6.000151,0 v 3.9997558 0.9999386 h 0.999939 V 7.0000895 6.0001506 Z M 0,7.0000895 V 9.9999064 H 1.9998779 V 7.0000895 Z m 13.00024,0 v 2.9998169 h 2.999817 V 7.0000895 Z m 5.999634,0 v 3.9997555 h 3.000334 V 7.0000895 Z" />
   <g
      inkscape:label="icon"
