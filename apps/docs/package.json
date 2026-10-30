@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.3",
-    "@logoicon/config": "1.0.10",
+    "@logoicon/config": "1.0.11",
     "astro": "^7.2.10",
     "sharp": "^0.35.3"
   },

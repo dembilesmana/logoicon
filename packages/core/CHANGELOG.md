@@ -1,5 +1,11 @@
 # @logoicon/core
 
+## 1.0.11
+
+### Patch Changes
+
+- 44eb330: Rename brand from iresume to resumeline
+
 ## 1.0.10
 
 ### Patch Changes
