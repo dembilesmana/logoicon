@@ -1,5 +1,11 @@
 # @logoicon/react
 
+## 1.0.12
+
+### Patch Changes
+
+- 6aa97b5: Declare React as a peer dependency for the published React package.
+
 ## 1.0.11
 
 ## 1.0.10
