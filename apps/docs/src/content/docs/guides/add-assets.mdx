@@ -41,7 +41,7 @@ Jangan gunakan suffix `-mono` untuk aset berwarna. Jika aset monochrome memiliki
 Dari root repository:
 
 ```bash
-npx turbo run generate --filter=@logoicon/core
+pnpm exec turbo run generate --filter=@logoicon/core
 ```
 
 Generator menghapus output lama lalu memproses semua file dari `assets` ke `.assets`. Jika ada SVG yang tidak valid, proses akan berhenti dan error perlu diperbaiki sebelum lanjut.
@@ -49,7 +49,7 @@ Generator menghapus output lama lalu memproses semua file dari `assets` ke `.ass
 ## 3. Generate komponen React
 
 ```bash
-npx turbo run generate --filter=@logoicon/react
+pnpm exec turbo run generate --filter=@logoicon/react
 ```
 
 Langkah ini membaca ekspor aset Core, membuat file `.tsx`, index export, dan metadata React di `packages/react/.dist`.
@@ -59,8 +59,8 @@ Langkah ini membaca ekspor aset Core, membuat file `.tsx`, index export, dan met
 Jalankan pemeriksaan tipe dan build yang relevan:
 
 ```bash
-npm run check-types
-npx turbo run build --filter=@logoicon/react
+pnpm check-types
+pnpm exec turbo run build --filter=@logoicon/react
 ```
 
 Output `.assets`, `.dist`, dan `dist` adalah artefak build yang diabaikan Git. Jangan menambahkan hasil generate tersebut secara manual kecuali workflow repository memintanya.

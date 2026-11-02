@@ -29,9 +29,9 @@
       enable = true;
       previews = {
         # web = {
-        #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
+        #   # Example: run "pnpm dev" with PORT set to IDX's defined port for previews,
         #   # and show it in IDX's web preview panel
-        #   command = ["npm" "run" "dev"];
+        #   command = ["pnpm" "dev"];
         #   manager = "web";
         #   env = {
         #     # Environment variables to set for your server
@@ -45,7 +45,7 @@
     workspace = {
       # Runs when a workspace is first created
       onCreate = {
-        npm-install = "npm ci --no-audit --prefer-offline --no-progress --timing";
+        pnpm-install = "corepack pnpm install --frozen-lockfile";
         # Open editors for the following files by default, if they exist:
         default.openFiles = [
           # Cover all the variations of language, src-dir, router (app/pages)
@@ -58,7 +58,7 @@
       # Runs when the workspace is (re)started
       onStart = {
         # Example: start a background task to watch and re-build backend code
-        # watch-backend = "npm run watch-backend";
+        # watch-backend = "pnpm run watch-backend";
       };
     };
   };

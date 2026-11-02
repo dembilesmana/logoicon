@@ -1,5 +1,6 @@
 // @ts-check
 import starlight from "@astrojs/starlight";
+import favicons from "astro-favicons";
 import { defineConfig } from "astro/config";
 
 // https://astro.build/config
@@ -59,5 +60,6 @@ export default defineConfig({
         },
       ],
     }),
+    favicons()
   ],
 });

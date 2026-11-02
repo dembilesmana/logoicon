@@ -12,11 +12,9 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.42.3",
-    "@logoicon/config": "1.0.11",
+    "@logoicon/config": "workspace:*",
     "astro": "^7.2.10",
+    "astro-favicons": "^3.1.8",
     "sharp": "^0.35.3"
-  },
-  "allowScripts": {
-    "esbuild": true
   }
 }

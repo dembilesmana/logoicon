@@ -7,15 +7,15 @@ Situs dokumentasi LogoIcon dibangun dengan Astro dan Starlight. Isi dokumentasi 
 Dari root repository:
 
 ```bash
-npm install
-npm run dev --workspace docs
+pnpm install
+pnpm --filter docs dev
 ```
 
 Untuk build production:
 
 ```bash
-npm run build --workspace docs
-npm run preview --workspace docs
+pnpm --filter docs build
+pnpm --filter docs preview
 ```
 
 Lihat dokumentasi yang dihasilkan di [LogoIcon](https://github.com/dembilesmana/logoicon) atau mulai dari halaman [Pengenalan](src/content/docs/index.mdx).
