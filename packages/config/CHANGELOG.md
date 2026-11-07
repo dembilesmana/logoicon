@@ -1,5 +1,11 @@
 # @logoicon/config
 
+## 1.0.14
+
+### Patch Changes
+
+- 18757ce: rechange error
+
 ## 1.0.13
 
 ### Patch Changes
