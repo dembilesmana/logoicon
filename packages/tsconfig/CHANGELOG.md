@@ -1,5 +1,11 @@
 # @logoicon/tsconfig
 
+## 1.0.13
+
+### Patch Changes
+
+- f9b63c1: add whatsapp brand
+
 ## 1.0.12
 
 ## 1.0.11
