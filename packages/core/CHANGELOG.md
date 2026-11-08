@@ -1,5 +1,11 @@
 # @logoicon/core
 
+## 1.0.16
+
+### Patch Changes
+
+- 1111ecf: fix: github action workflow
+
 ## 1.0.15
 
 ### Patch Changes
