@@ -1,5 +1,17 @@
 # web
 
+## 1.0.15
+
+### Patch Changes
+
+- 066cdba: fix: failed github action
+- a0d6e3a: fix: update changeset cli
+- Updated dependencies [066cdba]
+- Updated dependencies [a0d6e3a]
+  - @logoicon/config@1.0.15
+  - @logoicon/react@1.0.15
+  - @logoicon/util@1.0.15
+
 ## 1.0.11
 
 ### Patch Changes

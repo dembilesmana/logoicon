@@ -1,5 +1,12 @@
 # @logoicon/core
 
+## 1.0.15
+
+### Patch Changes
+
+- 066cdba: fix: failed github action
+- a0d6e3a: fix: update changeset cli
+
 ## 1.0.14
 
 ### Patch Changes
