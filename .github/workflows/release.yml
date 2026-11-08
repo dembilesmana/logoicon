@@ -32,7 +32,7 @@ jobs:
           cache: pnpm
 
       - name: Update npm for Trusted Publishing
-        run: npm install --global npm@latest
+        run: npm install --global npm@11.21.2
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
